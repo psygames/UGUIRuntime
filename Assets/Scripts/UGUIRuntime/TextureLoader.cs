@@ -1,29 +1,18 @@
-﻿using System.Threading.Tasks;
+﻿using System;
 using UnityEngine;
-using UnityEngine.Networking;
 
-namespace UGUIRuntime
+namespace psyhack
 {
     public class TextureLoader
     {
-        public static async Task<Texture2D> LoadFromUrl(string url)
+        public static void LoadFromUrl(string url, Action<Texture2D> callback, bool cached = false)
         {
-            var req = UnityWebRequest.Get(url);
-            req.SendWebRequest();
-            while (!req.isDone)
+            Http.Download(url, (bytes) =>
             {
-                await Task.Yield();
-            }
-            if (req.isHttpError || req.isNetworkError)
-            {
-                Debug.LogError($"request faild code({req.responseCode}): {url}");
-                return null;
-            }
-            var bytes = req.downloadHandler.data;
-            req.Dispose();
-            var texture = new Texture2D(0, 0);
-            texture.LoadImage(bytes);
-            return texture;
+                var texture = new Texture2D(0, 0);
+                texture.LoadImage(bytes);
+                callback?.Invoke(texture);
+            });
         }
     }
 }

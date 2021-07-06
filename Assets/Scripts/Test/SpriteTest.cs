@@ -1,56 +1,45 @@
-﻿using UGUIRuntime;
+﻿using psyhack;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class SpriteTest : MonoBehaviour
 {
-    public string url;
-    public Image image;
-
     private void Awake()
     {
-        Boot.instance.scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-        Boot.instance.scaler.referenceResolution = new Vector2(1920, 1080);
-        Boot.instance.scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
+        Root.Create();
+        Http.Create();
+        Root.instance.SetRemoteUrlHost("http://39.105.150.229:8741/modern_clean_gui/");
         Build();
     }
 
-    Image backgroud;
-    void Build()
+    public void Build()
     {
-        Boot.instance.SetRemoteUrlHost("http://39.105.150.229:8741/images/");
-        var root = Boot.instance.canvasRoot.AddNode("Root");
-        root.anchorMin = Vector2.zero;
-        root.anchorMax = Vector2.one;
+        var ui = Root.instance.canvasRoot.AddNode("Top");
+        ui.SetSize(Vector2.one * 400);
 
-        root.AddImage("ability")
-            .SetSprite("icons/icons_small_white/ability_icon.png")
-            .SetAnchoredPosition(new Vector2(10, 100));
+        var background = ui.AddImage("background")
+            .SetSize(400, 400)
+            .SetSprite("https://z3.ax1x.com/2021/07/02/R6CXlQ.png");
 
-        var button1 = root.AddButton("button1").SetSprite("buttons/basic/filled/green_button.png")
-            .SetAnchoredPosition(new Vector2(100, 200))
-            .SetText("Load Backgroud")
-            .SetListener((_button) =>
+        var button = ui.AddButton("button")
+            .SetPos(20, 40).SetSize(300, 100)
+            .SetSprite("https://z3.ax1x.com/2021/07/02/R6CIeI.png")
+            .SetText("测试按钮")
+            .SetListener(() =>
             {
-                if (!backgroud)
-                {
-                    backgroud = root.AddImage("background")
-                        .SetAnchoredPosition(new Vector2(0, 10))
-                        .SetSizeDelta(new Vector2(1200, 1200))
-                        .SetSiblingIndex(0)
-                        .SetSpriteUrl(url);
-                }
-                else
-                {
-                    backgroud.SetSpriteUrl(url);
-                }
-            });
+                Debug.LogError("test");
+            }); ;
 
-        var button2 = root.AddButton("button2").SetSprite("buttons/basic/outline/bluelight_button_outline.png")
-            .SetAnchoredPosition(new Vector2(200, 300))
-            .SetListener((_button) =>
+        var text = ui.AddText()
+            .SetPos(100, 120).SetSize(100, 50)
+            .SetFont(35).SetText("哈哈哈");
+
+        var toggle = ui.AddToggle()
+            .SetPos(10, 200).SetSize(44, 44)
+            .SetSprite("Buttons/Button_TickBox_Off_Rounded", "Buttons/Button_TickBox_On_Rounded")
+            .SetText("测试Toggle")
+            .SetListener(isOn =>
             {
-                button1.SetSprite("buttons/basic/filled/green_button.png");
+                Debug.LogError("Toggle: " + isOn);
             });
     }
 }

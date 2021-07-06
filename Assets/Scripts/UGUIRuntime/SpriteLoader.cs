@@ -1,13 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
-namespace UGUIRuntime
+namespace psyhack
 {
     public static class SpriteLoader
     {
         static Dictionary<string, Sprite> _cachedSprites = new Dictionary<string, Sprite>();
         static Dictionary<string, bool> _cachedSpritesLoading = new Dictionary<string, bool>();
+        static Dictionary<string, Action<Sprite>> _cachedSpriteLoadingCallback = new Dictionary<string, Action<Sprite>>();
 
         private static bool IsLoading(string url)
         {
@@ -19,41 +20,83 @@ namespace UGUIRuntime
             _cachedSpritesLoading[url] = isLoading;
         }
 
-        public static async Task<Sprite> LoadFromUrl(string url, bool cached = false)
+        // 
+        private static Rect GetBorder()
+        {
+            return default;
+        }
+
+        public static void Clear()
+        {
+            _cachedSprites.Clear();
+            _cachedSpritesLoading.Clear();
+            _cachedSpriteLoadingCallback.Clear();
+
+        }
+
+        public static void LoadFromUrl(string url, Action<Sprite> callback, bool cached = false)
         {
             if (!cached)
             {
-                var texture = await TextureLoader.LoadFromUrl(url);
-                if (texture == null) return null;
-                return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
+                TextureLoader.LoadFromUrl(url, (texture) =>
+                {
+                    if (texture == null)
+                    {
+                        callback?.Invoke(null);
+                        return;
+                    }
+                    var sprite = Sprite.Create(texture,
+                        new Rect(0, 0, texture.width, texture.height),
+                        Vector2.zero);
+                    callback?.Invoke(sprite);
+                });
+                return;
             }
 
-            if (!_cachedSprites.TryGetValue(url, out var sprite))
+            if (_cachedSprites.TryGetValue(url, out var _sprite))
             {
-                if (IsLoading(url))
+                callback?.Invoke(_sprite);
+                return;
+            }
+
+            if (IsLoading(url))
+            {
+                if (_cachedSpriteLoadingCallback.ContainsKey(url))
                 {
-                    await Task.Yield();
-                    while (IsLoading(url))
-                    {
-                        await Task.Yield();
-                    }
-                    _cachedSprites.TryGetValue(url, out sprite);
+                    _cachedSpriteLoadingCallback[url] += callback;
                 }
                 else
                 {
-                    SetLoading(url, true);
-                    var texture = await TextureLoader.LoadFromUrl(url);
-                    if (texture == null)
-                    {
-                        SetLoading(url, false);
-                        return null;
-                    }
-                    sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
-                    _cachedSprites.Add(url, sprite);
-                    SetLoading(url, false);
+                    _cachedSpriteLoadingCallback[url] = callback;
                 }
+                return;
             }
-            return sprite;
+
+            SetLoading(url, true);
+            TextureLoader.LoadFromUrl(url, (texture) =>
+            {
+                SetLoading(url, false);
+                if (texture == null)
+                {
+                    if (_cachedSpriteLoadingCallback.TryGetValue(url, out var cache))
+                    {
+                        cache?.Invoke(null);
+                        _cachedSpriteLoadingCallback.Remove(url);
+                    }
+                    callback?.Invoke(null);
+                }
+                else
+                {
+                    var sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
+                    _cachedSprites.Add(url, sprite);
+                    if (_cachedSpriteLoadingCallback.TryGetValue(url, out var cache))
+                    {
+                        cache?.Invoke(sprite);
+                        _cachedSpriteLoadingCallback.Remove(url);
+                    }
+                    callback?.Invoke(sprite);
+                }
+            });
         }
     }
 }

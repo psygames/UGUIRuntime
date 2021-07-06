@@ -2,24 +2,32 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UGUIRuntime
+namespace psyhack
 {
     internal class LoadingMask : MonoBehaviour
     {
-        private static LoadingMask _instance = null;
-        private static LoadingMask instance => _instance ?? Create();
+        private static LoadingMask instance;
+        private Dictionary<int, LoadingMaskItem> items = new Dictionary<int, LoadingMaskItem>();
 
-        private static LoadingMask Create()
+        public static LoadingMask Create()
         {
-            var go = new GameObject("LoadingMask");
-            _instance = go.AddComponent<LoadingMask>();
+            if (instance) return instance;
+            var go = new GameObject("[Loading Mask]");
+            GameObject.DontDestroyOnLoad(go);
+            instance = go.AddComponent<LoadingMask>();
             go.AddComponent<RectTransform>();
-            go.transform.SetParent(Boot.instance.canvas.transform);
+            go.transform.SetParent(Root.instance.canvas.transform);
             go.GetComponent<RectTransform>().Reset();
-            return _instance;
+            return instance;
         }
 
-        private Dictionary<int, LoadingMaskItem> items = new Dictionary<int, LoadingMaskItem>();
+        public static void Destroy()
+        {
+            if (!instance) return;
+            instance.items.Clear();
+            GameObject.Destroy(instance.gameObject);
+            instance = null;
+        }
 
         public static int Show(Vector2 position, Vector2 size)
         {
@@ -66,8 +74,9 @@ namespace UGUIRuntime
         {
             if (!image) return;
             image.color = Color.clear;
-            image.SetAnchor(Vector2.zero, Vector2.one);
-            image.SetSizeDelta(Vector2.zero);
+            image.rectTransform.anchorMin = Vector2.zero;
+            image.rectTransform.anchorMax = Vector2.one;
+            image.rectTransform.sizeDelta = Vector2.zero;
         }
 
         private static LoadingMaskItem _template;
@@ -80,7 +89,7 @@ namespace UGUIRuntime
                 _template.rectTransform = _go.AddComponent<RectTransform>();
                 _template.image = _template.rectTransform.AddImage();
                 _template.text = _template.rectTransform.AddText();
-                _template.text.SetSizeDelta(new Vector2(200, 60));
+                _template.text.rectTransform.sizeDelta = new Vector2(200, 60);
                 _template.text.text = "Loading...";
                 _template.rectTransform.SetParent(parent);
                 _template.rectTransform.Reset();

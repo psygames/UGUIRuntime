@@ -18,3 +18,5 @@ bin/
 *.csproj
 
 *.sln
+Assets/Modern UI Pack/
+Assets/TextMesh Pro/
