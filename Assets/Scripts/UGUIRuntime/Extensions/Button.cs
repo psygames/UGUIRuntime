@@ -14,19 +14,27 @@ namespace psyhack
         public static Button SetText(this Button button, string text)
         {
             var comp = button.GetRectTransform().GetOrAddNode("Text").GetOrAddComponent<Text>();
-            comp.GetRectTransform().SetPadding();
+            comp.GetRectTransform().SetPadding().SetPivotCenter();
             comp.SetFont();
             comp.text = text;
             comp.alignment = TextAnchor.MiddleCenter;
             return button;
         }
 
-        public static Button SetSprite(this Button button, string name,
-            bool setNativeSize = false, bool showLoading = false)
+        public static Button SetSprite(this Button button, string name, float border = 0)
         {
             if (button.image)
             {
-                button.image.SetSprite(name, setNativeSize, showLoading);
+                button.image.SetSprite(name, border);
+            }
+            return button;
+        }
+
+        public static Button SetColor(this Button button, Color32 color)
+        {
+            if (button.image)
+            {
+                button.image.SetColor(color);
             }
             return button;
         }

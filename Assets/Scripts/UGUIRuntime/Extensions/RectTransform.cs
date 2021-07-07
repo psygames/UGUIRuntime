@@ -17,7 +17,7 @@ namespace psyhack
             return rectTransform;
         }
 
-        private static RectTransform SetAnchor(this RectTransform rectTransform, Vector2 min, Vector2 max)
+        private static RectTransform SetAnchorMinMax(this RectTransform rectTransform, Vector2 min, Vector2 max)
         {
             rectTransform.anchorMin = min;
             rectTransform.anchorMax = max;
@@ -29,6 +29,25 @@ namespace psyhack
             rectTransform.anchorMin = Vector2.zero;
             rectTransform.anchorMax = Vector2.one;
             rectTransform.sizeDelta = Vector2.one * -paddingAll;
+            return rectTransform;
+        }
+
+        private static RectTransform SetPivot(this RectTransform rectTransform, Vector2 pivot)
+        {
+            rectTransform.pivot = pivot;
+            return rectTransform;
+        }
+
+        private static RectTransform SetPivotCenter(this RectTransform rectTransform)
+        {
+            rectTransform.SetPivot(Vector2.one * 0.5f);
+            return rectTransform;
+        }
+
+        private static RectTransform SetCenter(this RectTransform rectTransform)
+        {
+            rectTransform.SetPivot(Vector2.one * 0.5f)
+                .SetAnchorMinMax(Vector2.one * 0.5f, Vector2.one * 0.5f);
             return rectTransform;
         }
 
@@ -142,9 +161,22 @@ namespace psyhack
         public static Toggle AddToggle(this RectTransform rectTransform, string name = null)
         {
             var node = rectTransform.AddNode(name ?? "toggle");
-            node.AddNode("Background").AddNode("Checkmark");
+            node.AddNode("Background").AddNode("Checkmark").SetCenter();
             var toggle = node.gameObject.AddComponent<Toggle>();
             return toggle;
+        }
+
+        public static Slider AddSlider(this RectTransform rectTransform, string name = null)
+        {
+            var node = rectTransform.AddNode(name ?? "slider");
+            node.AddNode("Background").SetPadding().SetPivotCenter();
+            node.AddNode("Fill Area").SetPadding().SetPivotCenter().AddNode("Fill")
+                .SetAnchorMinMax(Vector2.zero, Vector2.one);
+            node.AddNode("Handle Slide Area").SetPadding().SetPivotCenter()
+                .AddNode("Position").SetCenter()
+                .AddNode("Handle").SetCenter();
+            var slider = node.gameObject.AddComponent<Slider>();
+            return slider;
         }
         #endregion
 

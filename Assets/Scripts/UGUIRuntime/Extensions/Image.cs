@@ -1,10 +1,11 @@
-﻿using UnityEngine.UI;
+﻿using UnityEngine;
+using UnityEngine.UI;
 namespace psyhack
 {
     public static partial class UGUIRuntimeExtensions
     {
         private static void SetSpriteUrl(this Image image, string url,
-            bool setNativeSize, bool showLoading)
+          float border, bool setNativeSize, bool showLoading)
         {
             image.enabled = false;
             var _maskId = 0;
@@ -12,7 +13,7 @@ namespace psyhack
             {
                 _maskId = LoadingMask.Show(image.rectTransform.position, image.rectTransform.rect.size);
             }
-            SpriteLoader.LoadFromUrl(url, (sprite) =>
+            SpriteLoader.LoadFromUrl(url, border, (sprite) =>
             {
                 image.sprite = sprite;
                 image.enabled = true;
@@ -20,6 +21,10 @@ namespace psyhack
                 {
                     image.type = Image.Type.Simple;
                     image.SetNativeSize();
+                }
+                else if (!Mathf.Approximately(border, 0))
+                {
+                    image.type = Image.Type.Sliced;
                 }
                 if (showLoading)
                 {
@@ -29,11 +34,17 @@ namespace psyhack
         }
 
         public static Image SetSprite(this Image image, string name,
-            bool setNativeSize = false, bool showLoading = false)
+            float border = 0, bool setNativeSize = false, bool showLoading = false)
         {
             var spriteHost = Root.instance.remoteUrlHost ?? "";
             var url = name.StartsWith("http") ? name : spriteHost + name + ".png";
-            image.SetSpriteUrl(url, setNativeSize, showLoading);
+            image.SetSpriteUrl(url, border, setNativeSize, showLoading);
+            return image;
+        }
+
+        public static Image SetColor(this Image image, Color32 color)
+        {
+            image.color = color;
             return image;
         }
 

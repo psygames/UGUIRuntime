@@ -7,22 +7,27 @@ namespace psyhack
     {
         public static Toggle SetSprite(this Toggle toggle, string background, string checkmark)
         {
+            toggle.GetBackground().SetSprite(background);
+            toggle.GetCheckmark().SetSprite(checkmark);
+            return toggle;
+        }
+
+        public static Image GetBackground(this Toggle toggle)
+        {
             var bg = toggle.GetRectTransform()
                 .GetOrAddNode("Background")
-                .SetPadding()
-                .GetOrAddComponent<Image>()
-                .SetSprite(background);
-
-            var mark = bg.GetRectTransform()
-                .GetOrAddNode("Checkmark")
-                .SetPadding()
-                .GetOrAddComponent<Image>()
-                .SetSprite(checkmark);
-
+                .GetOrAddComponent<Image>();
             toggle.targetGraphic = bg;
-            toggle.graphic = mark;
+            return bg;
+        }
 
-            return toggle;
+        public static Image GetCheckmark(this Toggle toggle)
+        {
+            var mark = toggle.GetBackground().GetRectTransform()
+                .GetOrAddNode("Checkmark")
+                .GetOrAddComponent<Image>();
+            toggle.graphic = mark;
+            return mark;
         }
 
         public static Toggle SetText(this Toggle toggle, string text, float width = 0f)
@@ -48,7 +53,6 @@ namespace psyhack
             toggle.onValueChanged.AddListener(action);
             return toggle;
         }
-
 
         public static Toggle SetPos(this Toggle comp, float x, float y)
         {
