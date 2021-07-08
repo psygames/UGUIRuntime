@@ -14,7 +14,8 @@ namespace psyhack
         {
             if (knob.rectTransform.anchoredPosition == pos)
                 return;
-            knob.rectTransform.anchoredPosition = Vector2.Lerp(knob.rectTransform.anchoredPosition, pos, Time.deltaTime * 15);
+            knob.rectTransform.anchoredPosition = Vector2.Lerp(
+                knob.rectTransform.anchoredPosition, pos, Time.deltaTime * 20);
         }
 
         private void Update()

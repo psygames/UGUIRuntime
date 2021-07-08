@@ -36,8 +36,8 @@ namespace psyhack
         public static Image SetSprite(this Image image, string name,
             int border = 0, bool setNativeSize = false, bool showLoading = false)
         {
-            var spriteHost = Root.instance.remoteUrlHost ?? "";
-            var url = name.StartsWith("http") ? name : spriteHost + name + ".png";
+            var host = UGUI.host ?? "";
+            var url = name.StartsWith("http") ? name : host + name + ".png";
             image.SetSpriteUrl(url, border, setNativeSize, showLoading);
             return image;
         }

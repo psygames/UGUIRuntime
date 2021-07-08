@@ -5,16 +5,18 @@ public class SpriteTest : MonoBehaviour
 {
     private void Awake()
     {
-        Root.Create();
+        UGUI.Create();
         Http.Create();
-        Root.instance.SetRemoteUrlHost("http://39.105.150.229:8741/psyhack_img/");
         Build();
     }
 
     public void Build()
     {
+        // set host
+        UGUI.SetHost("http://39.105.150.229:8741/psyhack_img/");
+
         // add ui root
-        var ui = Root.instance.canvasRoot.AddNode("Top");
+        var ui = UGUI.CreateUIRoot();
         ui.SetSize(Vector2.one * 400);
 
         // test image (backgroud)

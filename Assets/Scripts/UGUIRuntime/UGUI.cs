@@ -4,37 +4,43 @@ using UnityEngine.UI;
 
 namespace psyhack
 {
-    public class Root : MonoBehaviour
+    public class UGUI : MonoBehaviour
     {
-        public static Root instance { get; private set; }
-
-        public Canvas canvas { get; private set; }
-        public CanvasScaler scaler { get; private set; }
-        public RectTransform canvasRoot { get; private set; }
-        public string remoteUrlHost { get; private set; }
         public const int UI_LAYER = 5;
+        public static string host { get { return instance.remoteUrlHost; } }
+        public static Canvas canvas { get { return instance.rootCanvas; } }
 
-        public void SetRemoteUrlHost(string host)
+        private static UGUI instance;
+        private Canvas rootCanvas;
+        private CanvasScaler rootCanvasScaler;
+        private string remoteUrlHost;
+
+        public static void SetHost(string host)
         {
-            remoteUrlHost = host;
+            instance.remoteUrlHost = host;
         }
 
-        public static Root Create()
+        public static RectTransform CreateUIRoot(string name = "[UIRoot]")
+        {
+            return instance.rootCanvas.GetComponent<RectTransform>().AddNode(name);
+        }
+
+        public static UGUI Create()
         {
             if (instance) return instance;
 
             var obj = new GameObject("[UGUI Runtime]");
             GameObject.DontDestroyOnLoad(obj);
-            instance = obj.AddComponent<Root>();
+            instance = obj.AddComponent<UGUI>();
 
             // canvas
             var canvasObj = new GameObject("Canvas");
             canvasObj.layer = UI_LAYER;
-            instance.canvasRoot = canvasObj.AddComponent<RectTransform>();
+            canvasObj.AddComponent<RectTransform>();
             var canvas = canvasObj.AddComponent<Canvas>();
             canvas.renderMode = RenderMode.ScreenSpaceOverlay;
             canvas.sortingOrder = 10000;
-            instance.canvas = canvas;
+            instance.rootCanvas = canvas;
 
             // canvas scaler
             var canvasScaler = canvasObj.AddComponent<CanvasScaler>();
@@ -43,7 +49,7 @@ namespace psyhack
             canvasScaler.referencePixelsPerUnit = 100;
             canvasScaler.referenceResolution = new Vector2(1920, 1080);
             canvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
-            instance.scaler = canvasScaler;
+            instance.rootCanvasScaler = canvasScaler;
 
             // graphic raycaster
             var graphicRaycaster = canvasObj.AddComponent<GraphicRaycaster>();

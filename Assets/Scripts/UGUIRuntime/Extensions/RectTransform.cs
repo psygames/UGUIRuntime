@@ -129,7 +129,7 @@ namespace psyhack
         public static RectTransform AddNode(this RectTransform rectTransform, string name = null)
         {
             var go = new GameObject(name ?? "node");
-            go.layer = Root.UI_LAYER;
+            go.layer = UGUI.UI_LAYER;
             var node = go.AddComponent<RectTransform>();
             node.SetParent(rectTransform);
             node.Reset();

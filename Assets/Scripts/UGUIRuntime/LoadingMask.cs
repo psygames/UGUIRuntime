@@ -13,11 +13,11 @@ namespace psyhack
         {
             if (instance) return instance;
             var go = new GameObject("[Loading Mask]");
-            go.layer = Root.UI_LAYER;
+            go.layer = UGUI.UI_LAYER;
             GameObject.DontDestroyOnLoad(go);
             instance = go.AddComponent<LoadingMask>();
             go.AddComponent<RectTransform>();
-            go.transform.SetParent(Root.instance.canvas.transform);
+            go.transform.SetParent(UGUI.canvas.transform);
             go.GetComponent<RectTransform>().Reset();
             return instance;
         }
