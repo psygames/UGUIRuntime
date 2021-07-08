@@ -67,9 +67,9 @@ public class SpriteTest : MonoBehaviour
                 Debug.Log("switch: " + isOn);
             });
 
-        _switch.GetBackground().SetSprite("circle", 20).SetColor(Color.gray);
-        _switch.GetCheckmark().SetSize(68, 32).SetSprite("circle", 20).SetColor(Color.green);
-        _switch.GetKnob().SetSize(30, 30).SetSprite("circle");
+        _switch.GetBackground().SetSprite("circle", 20);
+        _switch.GetCheckmark().SetSize(72, 34).SetSprite("circle", 20).SetColor(Color.green * 0.6f);
+        _switch.GetKnob().SetSize(30, 30).SetSprite("circle").SetColor(Color.gray);
 
 
         var slider = ui.AddSlider()

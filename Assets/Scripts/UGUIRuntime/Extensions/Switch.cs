@@ -10,16 +10,23 @@ namespace psyhack
         public Vector2 knobOffPosition;
         public Vector2 knobOnPosition;
 
+        private void LerpTo(Vector2 pos)
+        {
+            if (knob.rectTransform.anchoredPosition == pos)
+                return;
+            knob.rectTransform.anchoredPosition = Vector2.Lerp(knob.rectTransform.anchoredPosition, pos, Time.deltaTime * 15);
+        }
+
         private void Update()
         {
             if (!knob) return;
             if (toggle.isOn)
             {
-                knob.rectTransform.anchoredPosition = knobOnPosition;
+                LerpTo(knobOnPosition);
             }
             else
             {
-                knob.rectTransform.anchoredPosition = knobOffPosition;
+                LerpTo(knobOffPosition);
             }
         }
     }
