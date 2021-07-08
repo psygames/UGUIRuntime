@@ -26,6 +26,18 @@ namespace psyhack
             return comp;
         }
 
+        public static Text SetAlignment(this Text comp, TextAnchor alignment)
+        {
+            comp.alignment = alignment;
+            return comp;
+        }
+
+        public static Text SetColor(this Text text, Color32 color)
+        {
+            text.color = color;
+            return text;
+        }
+
         public static Text SetPosition(this Text comp, float x, float y)
         {
             comp.GetRectTransform().SetPosition(x, y);

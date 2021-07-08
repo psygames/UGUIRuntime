@@ -17,13 +17,13 @@ public class SpriteTest : MonoBehaviour
         ui.SetSize(Vector2.one * 400);
 
         var background = ui.AddImage("background")
-            .SetSize(400, 400)
+            .SetSize(500, 500)
             .SetSprite("rect", 10)
             .SetColor(new Color32(85, 95, 115, 255));
 
         var button = ui.AddButton("button")
             .SetPosition(30, 40).SetSize(300, 100)
-            .SetSprite("rect", 10)
+            .SetSprite("rectr", 10)
             .SetText("测试按钮")
             .SetColor(Color.gray)
             .SetListener(() =>
@@ -80,8 +80,28 @@ public class SpriteTest : MonoBehaviour
                 Debug.Log("slider: " + val);
             });
 
-        slider.GetBackground().SetSprite("rect", 10);
-        slider.GetFill().SetSprite("rect", 10).SetColor(Color.gray);
+        slider.GetBackground().SetSprite("rectr", 10);
+        slider.GetFill().SetSprite("rectr", 10).SetColor(Color.gray);
         slider.GetHandle().SetSprite("circle").SetSize(30, 30);
+
+
+        var options = new string[] { "test 1", "中文测试 2", "dd", "aa", "bb", "zz" };
+        var dropdown = ui.AddDropdown()
+            .SetPosition(30, 400).SetSize(300, 50)
+            .SetOptions(options)
+            .SetDropdownHeight(160)
+            .SetItemHeight(40)
+            .SetTextPadding(12)
+            .SetListener((val) =>
+            {
+                Debug.Log("dropdown: " + options[val]);
+            });
+
+        dropdown.GetBackground().SetSprite("rect", 10);
+        dropdown.GetLabel().SetFont(36).SetColor(Color.black);
+        dropdown.GetDropdownBackground().SetSprite("rect", 10).SetColor(Color.white * 0.9f);
+        dropdown.GetItemBackground().SetSprite("rect", 10);
+        dropdown.GetItemCheckmark().SetSprite("rect", 10).SetColor(Color.blue);
+        dropdown.GetItemLabel().SetFont(30).SetColor(Color.black);
     }
 }

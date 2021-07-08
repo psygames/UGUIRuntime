@@ -12,6 +12,7 @@ namespace psyhack
         public CanvasScaler scaler { get; private set; }
         public RectTransform canvasRoot { get; private set; }
         public string remoteUrlHost { get; private set; }
+        public const int UI_LAYER = 5;
 
         public void SetRemoteUrlHost(string host)
         {
@@ -28,6 +29,7 @@ namespace psyhack
 
             // canvas
             var canvasObj = new GameObject("Canvas");
+            canvasObj.layer = UI_LAYER;
             instance.canvasRoot = canvasObj.AddComponent<RectTransform>();
             var canvas = canvasObj.AddComponent<Canvas>();
             canvas.renderMode = RenderMode.ScreenSpaceOverlay;

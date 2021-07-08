@@ -13,6 +13,7 @@ namespace psyhack
         {
             if (instance) return instance;
             var go = new GameObject("[Loading Mask]");
+            go.layer = Root.UI_LAYER;
             GameObject.DontDestroyOnLoad(go);
             instance = go.AddComponent<LoadingMask>();
             go.AddComponent<RectTransform>();

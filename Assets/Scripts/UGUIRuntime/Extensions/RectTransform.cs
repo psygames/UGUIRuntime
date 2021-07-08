@@ -24,11 +24,18 @@ namespace psyhack
             return rectTransform;
         }
 
-        private static RectTransform SetPadding(this RectTransform rectTransform, float paddingAll = 0f)
+        private static RectTransform SetPadding(this RectTransform rectTransform, float all = 0f)
+        {
+            rectTransform.SetPadding(all, all);
+            return rectTransform;
+        }
+
+        private static RectTransform SetPadding(this RectTransform rectTransform, float horizontal, float vertical)
         {
             rectTransform.anchorMin = Vector2.zero;
             rectTransform.anchorMax = Vector2.one;
-            rectTransform.sizeDelta = Vector2.one * -paddingAll;
+            rectTransform.sizeDelta = new Vector2(-horizontal * 2, -vertical * 2);
+            rectTransform.anchoredPosition = new Vector2(horizontal, vertical);
             return rectTransform;
         }
 
@@ -122,6 +129,7 @@ namespace psyhack
         public static RectTransform AddNode(this RectTransform rectTransform, string name = null)
         {
             var go = new GameObject(name ?? "node");
+            go.layer = Root.UI_LAYER;
             var node = go.AddComponent<RectTransform>();
             node.SetParent(rectTransform);
             node.Reset();
@@ -186,6 +194,64 @@ namespace psyhack
                 .AddNode("Handle").SetCenter();
             var slider = node.gameObject.AddComponent<Slider>();
             return slider;
+        }
+
+        public static Dropdown AddDropdown(this RectTransform rectTransform, string name = null)
+        {
+            var node = rectTransform.AddNode(name ?? "dropdown");
+            var dropdown = node.GetOrAddComponent<Dropdown>();
+            dropdown.image = node.GetOrAddComponent<Image>();
+
+            var label = node.AddNode("Label").SetPadding(10, 0).GetOrAddComponent<Text>()
+                .SetFont().SetColor(Color.black);
+            label.alignment = TextAnchor.MiddleLeft;
+
+            var template = node.AddNode("Template");
+            template.SetAnchorMinMax(Vector2.zero, Vector2.right);
+            template.SetPivot(new Vector2(0.5f, 1f));
+            template.gameObject.SetActive(false);
+            template.SetSizeDelta(new Vector2(0, 150));
+            template.SetAnchoredPosition(new Vector2(0, 2));
+            template.GetOrAddComponent<Image>();
+            var scrollRect = template.GetOrAddComponent<ScrollRect>();
+            var canvas = template.GetOrAddComponent<Canvas>();
+            canvas.overrideSorting = true;
+            canvas.sortingOrder = 30000;
+            template.GetOrAddComponent<GraphicRaycaster>();
+            template.GetOrAddComponent<CanvasGroup>();
+
+            var viewport = template.AddNode("Viewport");
+            viewport.SetPadding();
+            viewport.GetOrAddComponent<Image>().SetColor(new Color32(0, 0, 0, 0));
+            viewport.GetOrAddComponent<RectMask2D>();
+
+            var content = viewport.AddNode("Content")
+                .SetAnchorMinMax(Vector2.up, Vector2.one)
+                .SetPivot(new Vector2(0.5f, 1))
+                .SetSizeDelta(new Vector2(0, 38));
+
+            var item = content.AddNode("Item");
+            item.SetAnchorMinMax(new Vector2(0, 0.5f), new Vector2(1, 0.5f));
+            item.SetPivotCenter();
+            item.SetSizeDelta(new Vector2(0, 30));
+            var itemToggle = item.GetOrAddComponent<Toggle>();
+            itemToggle.targetGraphic = item.AddNode("Item Background").SetPadding().GetOrAddComponent<Image>();
+            itemToggle.graphic = item.AddNode("Item Checkmark").SetPadding().GetOrAddComponent<Image>().SetColor(Color.gray);
+            var itemLabel = item.AddNode("Item Label").SetPadding(10, 0).GetOrAddComponent<Text>()
+                .SetFont().SetColor(Color.black); ;
+            itemLabel.alignment = TextAnchor.MiddleLeft;
+
+            scrollRect.viewport = viewport;
+            scrollRect.content = content;
+            scrollRect.horizontal = false;
+            scrollRect.movementType = ScrollRect.MovementType.Clamped;
+            scrollRect.scrollSensitivity = 20;
+
+            dropdown.template = template;
+            dropdown.captionText = label;
+            dropdown.itemText = itemLabel;
+
+            return dropdown;
         }
         #endregion
 

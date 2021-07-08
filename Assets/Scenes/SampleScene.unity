@@ -330,7 +330,6 @@ GameObject:
   - component: {fileID: 681680850}
   - component: {fileID: 681680849}
   - component: {fileID: 681680848}
-  - component: {fileID: 681680852}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -418,21 +417,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &681680852
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 681680847}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7953082ca3b75b94da9febb53f447f8d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  path: Assets/Modern UI Pack/Textures/Border/Rounded/1024px
-  size: 64
-  saveTo: Assets/Sprites
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
