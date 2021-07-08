@@ -5,13 +5,6 @@ namespace psyhack
 {
     public static partial class UGUIRuntimeExtensions
     {
-        public static Toggle SetSprite(this Toggle toggle, string background, string checkmark)
-        {
-            toggle.GetBackground().SetSprite(background);
-            toggle.GetCheckmark().SetSprite(checkmark);
-            return toggle;
-        }
-
         public static Image GetBackground(this Toggle toggle)
         {
             var bg = toggle.GetRectTransform()
@@ -54,9 +47,9 @@ namespace psyhack
             return toggle;
         }
 
-        public static Toggle SetPos(this Toggle comp, float x, float y)
+        public static Toggle SetPosition(this Toggle comp, float x, float y)
         {
-            comp.GetRectTransform().SetPos(x, y);
+            comp.GetRectTransform().SetPosition(x, y);
             return comp;
         }
 

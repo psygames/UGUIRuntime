@@ -48,9 +48,9 @@ namespace psyhack
             return slider;
         }
 
-        public static Slider SetPos(this Slider comp, float x, float y)
+        public static Slider SetPosition(this Slider comp, float x, float y)
         {
-            comp.GetRectTransform().SetPos(x, y);
+            comp.GetRectTransform().SetPosition(x, y);
             return comp;
         }
 

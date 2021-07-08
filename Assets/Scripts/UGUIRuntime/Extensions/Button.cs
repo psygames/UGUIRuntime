@@ -21,7 +21,7 @@ namespace psyhack
             return button;
         }
 
-        public static Button SetSprite(this Button button, string name, float border = 0)
+        public static Button SetSprite(this Button button, string name, int border = 0)
         {
             if (button.image)
             {
@@ -39,9 +39,9 @@ namespace psyhack
             return button;
         }
 
-        public static Button SetPos(this Button comp, float x, float y)
+        public static Button SetPosition(this Button comp, float x, float y)
         {
-            comp.GetRectTransform().SetPos(x, y);
+            comp.GetRectTransform().SetPosition(x, y);
             return comp;
         }
 

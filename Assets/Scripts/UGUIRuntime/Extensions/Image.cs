@@ -5,7 +5,7 @@ namespace psyhack
     public static partial class UGUIRuntimeExtensions
     {
         private static void SetSpriteUrl(this Image image, string url,
-          float border, bool setNativeSize, bool showLoading)
+          int border, bool setNativeSize, bool showLoading)
         {
             image.enabled = false;
             var _maskId = 0;
@@ -34,7 +34,7 @@ namespace psyhack
         }
 
         public static Image SetSprite(this Image image, string name,
-            float border = 0, bool setNativeSize = false, bool showLoading = false)
+            int border = 0, bool setNativeSize = false, bool showLoading = false)
         {
             var spriteHost = Root.instance.remoteUrlHost ?? "";
             var url = name.StartsWith("http") ? name : spriteHost + name + ".png";
@@ -48,9 +48,9 @@ namespace psyhack
             return image;
         }
 
-        public static Image SetPos(this Image comp, float x, float y)
+        public static Image SetPosition(this Image comp, float x, float y)
         {
-            comp.GetRectTransform().SetPos(x, y);
+            comp.GetRectTransform().SetPosition(x, y);
             return comp;
         }
 

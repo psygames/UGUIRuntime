@@ -26,9 +26,9 @@ namespace psyhack
             return comp;
         }
 
-        public static Text SetPos(this Text comp, float x, float y)
+        public static Text SetPosition(this Text comp, float x, float y)
         {
-            comp.GetRectTransform().SetPos(x, y);
+            comp.GetRectTransform().SetPosition(x, y);
             return comp;
         }
 

@@ -94,12 +94,12 @@ namespace psyhack
             return rectTransform;
         }
 
-        public static RectTransform SetPos(this RectTransform rectTransform, float x, float y)
+        public static RectTransform SetPosition(this RectTransform rectTransform, float x, float y)
         {
-            return rectTransform.SetPos(new Vector2(x, y));
+            return rectTransform.SetPosition(new Vector2(x, y));
         }
 
-        public static RectTransform SetPos(this RectTransform rectTransform, Vector2 pos)
+        public static RectTransform SetPosition(this RectTransform rectTransform, Vector2 pos)
         {
             rectTransform.SetAnchoredPosition(new Vector2(pos.x, -pos.y));
             return rectTransform;
@@ -161,9 +161,18 @@ namespace psyhack
         public static Toggle AddToggle(this RectTransform rectTransform, string name = null)
         {
             var node = rectTransform.AddNode(name ?? "toggle");
-            node.AddNode("Background").AddNode("Checkmark").SetCenter();
+            node.AddNode("Background").SetPadding().AddNode("Checkmark").SetCenter();
             var toggle = node.gameObject.AddComponent<Toggle>();
             return toggle;
+        }
+
+        public static Switch AddSwitch(this RectTransform rectTransform, string name = null)
+        {
+            var toggle = rectTransform.AddToggle(name ?? "switch");
+            toggle.GetRectTransform().GetOrAddNode("Background").AddNode("Knob").SetCenter();
+            var _switch = toggle.gameObject.AddComponent<Switch>();
+            _switch.toggle = toggle;
+            return _switch;
         }
 
         public static Slider AddSlider(this RectTransform rectTransform, string name = null)
