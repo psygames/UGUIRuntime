@@ -64,13 +64,12 @@ namespace psyhack
             canvasObj.transform.SetParent(obj.transform);
             eventSystemObj.transform.SetParent(obj.transform);
 
-            LoadingMask.Create();
-
             return instance;
         }
 
         public static void Destroy()
         {
+            SpriteLoader.ClearCache();
             LoadingMask.Destroy();
 
             if (!instance) return;

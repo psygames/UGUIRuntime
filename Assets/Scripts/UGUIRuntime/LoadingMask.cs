@@ -32,6 +32,7 @@ namespace psyhack
 
         public static int Show(Vector2 position, Vector2 size)
         {
+            if (!instance) Create();
             int id = 0;
             foreach (var kv in instance.items)
             {

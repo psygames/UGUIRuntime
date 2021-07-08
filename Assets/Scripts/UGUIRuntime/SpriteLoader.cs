@@ -22,7 +22,7 @@ namespace psyhack
             }
         }
 
-        public static void Clear()
+        public static void ClearCache()
         {
             _cachedTextures.Clear();
             _cachedSprites.Clear();

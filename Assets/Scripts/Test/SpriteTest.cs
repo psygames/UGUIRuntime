@@ -13,14 +13,17 @@ public class SpriteTest : MonoBehaviour
 
     public void Build()
     {
+        // add ui root
         var ui = Root.instance.canvasRoot.AddNode("Top");
         ui.SetSize(Vector2.one * 400);
 
+        // test image (backgroud)
         var background = ui.AddImage("background")
             .SetSize(500, 500)
             .SetSprite("rect", 10)
             .SetColor(new Color32(85, 95, 115, 255));
 
+        // test button
         var button = ui.AddButton("button")
             .SetPosition(30, 40).SetSize(300, 100)
             .SetSprite("rectr", 10)
@@ -31,10 +34,12 @@ public class SpriteTest : MonoBehaviour
                 Debug.Log("Button click");
             });
 
+        // test text
         var text = ui.AddText()
             .SetPosition(250, 120).SetSize(100, 50)
             .SetFont(35).SetText("哈哈哈");
 
+        // test toggle
         var toggle = ui.AddToggle()
             .SetPosition(30, 200).SetSize(44, 44)
             .SetText("测试Toggle")
@@ -47,6 +52,7 @@ public class SpriteTest : MonoBehaviour
         toggle.GetCheckmark().SetSize(30, 30).SetSprite("circle").SetColor(Color.black);
 
 
+        // test checkbox
         var checkbox = ui.AddToggle()
             .SetPosition(30, 250).SetSize(44, 44)
             .SetText("测试Checkbox")
@@ -58,7 +64,7 @@ public class SpriteTest : MonoBehaviour
         checkbox.GetBackground().SetSprite("checkbox");
         checkbox.GetCheckmark().SetSize(30, 30).SetSprite("checked").SetColor(Color.black);
 
-
+        // test switch
         var _switch = ui.AddSwitch()
             .SetPosition(30, 300).SetSize(88, 44)
             .SetKnobPosition(-18, 18)
@@ -72,6 +78,7 @@ public class SpriteTest : MonoBehaviour
         _switch.GetKnob().SetSize(30, 30).SetSprite("circle").SetColor(Color.gray);
 
 
+        // test slider
         var slider = ui.AddSlider()
             .SetPosition(30, 350).SetSize(200, 20)
             .SetPadding(15)
@@ -85,6 +92,7 @@ public class SpriteTest : MonoBehaviour
         slider.GetHandle().SetSprite("circle").SetSize(30, 30);
 
 
+        // test dropdown
         var options = new string[] { "test 1", "中文测试 2", "dd", "aa", "bb", "zz" };
         var dropdown = ui.AddDropdown()
             .SetPosition(30, 400).SetSize(300, 50)
