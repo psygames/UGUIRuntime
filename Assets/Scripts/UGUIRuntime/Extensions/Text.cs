@@ -8,11 +8,11 @@ namespace psyhack
     {
         private static Dictionary<int, Font> fonts = new Dictionary<int, Font>();
 
-        public static Text SetFont(this Text text, int size = 24)
+        public static Text SetFont(this Text text, int size = 24, string fontname = "Arial")
         {
             if (!fonts.TryGetValue(size, out var font))
             {
-                font = Font.CreateDynamicFontFromOSFont("Arial", size);
+                font = Font.CreateDynamicFontFromOSFont(fontname, size);
                 fonts.Add(size, font);
             }
             text.font = font;

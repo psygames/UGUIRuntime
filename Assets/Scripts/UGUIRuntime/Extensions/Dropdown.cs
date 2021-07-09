@@ -133,7 +133,7 @@ namespace psyhack
         public static Dropdown SetItemHeight(this Dropdown comp, float height)
         {
             comp.GetItem().SetSizeDelta(new Vector2(0, height));
-            comp.GetContentArea().SetSizeDelta(new Vector2(0, height + 8));
+            comp.GetContentArea().SetSizeDelta(new Vector2(0, height));
             return comp;
         }
 

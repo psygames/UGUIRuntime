@@ -24,13 +24,13 @@ namespace psyhack
             return rectTransform;
         }
 
-        private static RectTransform SetPadding(this RectTransform rectTransform, float all = 0f)
+        public static RectTransform SetPadding(this RectTransform rectTransform, float all = 0f)
         {
             rectTransform.SetPadding(all, all);
             return rectTransform;
         }
 
-        private static RectTransform SetPadding(this RectTransform rectTransform, float horizontal, float vertical)
+        public static RectTransform SetPadding(this RectTransform rectTransform, float horizontal, float vertical)
         {
             rectTransform.anchorMin = Vector2.zero;
             rectTransform.anchorMax = Vector2.one;
@@ -153,13 +153,10 @@ namespace psyhack
             return button;
         }
 
-        private static Font fontDefault = null;
         public static Text AddText(this RectTransform rectTransform, string name = null)
         {
-            if (fontDefault == null) fontDefault = Font.CreateDynamicFontFromOSFont("Arial", 24);
             var node = rectTransform.AddNode(name ?? "text");
             var text = node.gameObject.AddComponent<Text>();
-            text.font = fontDefault;
             text.alignment = TextAnchor.MiddleLeft;
             text.fontSize = 24;
             text.raycastTarget = false;
