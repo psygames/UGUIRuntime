@@ -41,6 +41,12 @@ namespace psyhack
             return slider;
         }
 
+        public static Slider SetValue(this Slider slider, float value)
+        {
+            slider.value = value;
+            return slider;
+        }
+
         public static Slider SetListener(this Slider slider, UnityEngine.Events.UnityAction<float> action)
         {
             slider.onValueChanged.RemoveAllListeners();

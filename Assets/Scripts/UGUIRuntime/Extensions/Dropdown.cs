@@ -106,6 +106,12 @@ namespace psyhack
             return dropdown;
         }
 
+        public static Dropdown SetValue(this Dropdown dropdown, int index)
+        {
+            dropdown.value = index;
+            return dropdown;
+        }
+
         public static Dropdown SetPosition(this Dropdown comp, float x, float y)
         {
             comp.GetRectTransform().SetPosition(x, y);

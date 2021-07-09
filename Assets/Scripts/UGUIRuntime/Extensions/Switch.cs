@@ -12,15 +12,14 @@ namespace psyhack
 
         private void LerpTo(Vector2 pos)
         {
-            if (knob.rectTransform.anchoredPosition == pos)
+            if (!knob || knob.rectTransform.anchoredPosition == pos)
                 return;
-            knob.rectTransform.anchoredPosition = Vector2.Lerp(
-                knob.rectTransform.anchoredPosition, pos, Time.deltaTime * 20);
+            knob.rectTransform.anchoredPosition =
+                Vector2.Lerp(knob.rectTransform.anchoredPosition, pos, Time.deltaTime * 20);
         }
 
         private void Update()
         {
-            if (!knob) return;
             if (toggle.isOn)
             {
                 LerpTo(knobOnPosition);
@@ -79,6 +78,12 @@ namespace psyhack
         {
             _switch.toggle.onValueChanged.RemoveAllListeners();
             _switch.toggle.onValueChanged.AddListener(action);
+            return _switch;
+        }
+
+        public static Switch SetValue(this Switch _switch, bool isOn)
+        {
+            _switch.toggle.isOn = isOn;
             return _switch;
         }
 

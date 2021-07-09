@@ -10,18 +10,21 @@ namespace psyhack
         public static float height = 50;
         public static float position = 0;
         public static RectTransform root;
+        public static float indentLevel = 1;
 
         private const int titleWidth = 400;
         private const int contentWidth = 400;
         private const int rootWidth = 800;
+        private const int rootHeight = 2400;
 
         private const int fontSize = 24;
         private static string fontname = "Microsoft YaHei";
+        private static float indent => 10 + indentLevel * 20;
 
         public static RectTransform CreateRoot()
         {
             root = UGUI.CreateUIRoot();
-            root.SetSize(rootWidth, 1080);
+            root.SetSize(rootWidth, rootHeight);
             return root;
         }
 
@@ -38,8 +41,8 @@ namespace psyhack
         {
             return root.AddText()
                 .SetText(text)
-                .SetPosition(10, -4)
-                .SetSize(titleWidth - 20, height)
+                .SetPosition(indent, -4)
+                .SetSize(titleWidth - indent, height)
                 .SetFont(fontSize, fontname);
         }
 
@@ -59,25 +62,26 @@ namespace psyhack
             return AddText(CreateItem(), text);
         }
 
-        public static Switch CreateSwitch(string title, UnityAction<bool> listener)
+        public static Switch CreateSwitch(string title, bool isOn, UnityAction<bool> listener)
         {
             var item = CreateItem();
             AddText(item, title);
 
             var _switch = item.AddSwitch()
-                .SetPosition(titleWidth + (contentWidth - 82) / 2, 2)
-                .SetSize(82, height - 4)
+                .SetPosition(titleWidth + (contentWidth - 80) / 2, 4)
+                .SetSize(80, height - 8)
                 .SetKnobPosition(-17, 17)
-                .SetListener(listener);
+                .SetListener(listener)
+                .SetValue(isOn);
 
             _switch.GetBackground().SetSprite("circle", 20).SetColor(Color.white * 0.5f);
-            _switch.GetCheckmark().SetSize(68, 36).SetSprite("circle", 20).SetColor(new Color32(80, 180, 80, 255));
+            _switch.GetCheckmark().SetSize(72, 36).SetSprite("circle", 20).SetColor(new Color32(80, 180, 80, 255));
             _switch.GetKnob().SetSize(38, 38).SetSprite("circle").SetColor(Color.white * 0.9f);
 
             return _switch;
         }
 
-        public static Slider CreateSlider(string title, UnityAction<float> listener)
+        public static Slider CreateSlider(string title, float value, UnityAction<float> listener)
         {
             var item = CreateItem();
             AddText(item, title);
@@ -86,16 +90,17 @@ namespace psyhack
                 .SetPosition(titleWidth + 10, (height - 20) / 2)
                 .SetSize(contentWidth - 20, 20)
                 .SetPadding(10)
-                .SetListener(listener);
+                .SetListener(listener)
+                .SetValue(value);
 
-            slider.GetBackground().SetSprite("rectr", 10).SetColor(Color.gray);
-            slider.GetFill().SetSprite("rectr", 10).SetColor(Color.gray);
-            slider.GetHandle().SetSprite("rectr", 10).SetSize(20, 48);
+            slider.GetBackground().SetSprite("rectr", 10).SetColor(Color.white * 0.5f);
+            slider.GetFill().SetSprite("rectr", 10).SetColor(Color.white * 0.8f);
+            slider.GetHandle().SetSprite("rectr", 10).SetSize(26, 40);
 
             return slider;
         }
 
-        public static Dropdown CreateDropdown(string title, string[] options, UnityAction<int> listener)
+        public static Dropdown CreateDropdown(string title, int index, string[] options, UnityAction<int> listener)
         {
             var item = CreateItem();
             AddText(item, title);
@@ -108,7 +113,8 @@ namespace psyhack
                 .SetDropdownHeight(160)
                 .SetDropdownPaddingTop(0)
                 .SetItemHeight(40)
-                .SetTextPadding(0);
+                .SetTextPadding(0)
+                .SetValue(index);
 
             dropdown.GetBackground().SetSprite("rect", 10).SetColor(Color.clear);
             dropdown.GetLabel().SetPosition(0, -4).SetAlignment(TextAnchor.MiddleCenter).SetFont(fontSize, fontname).SetColor(Color.white);

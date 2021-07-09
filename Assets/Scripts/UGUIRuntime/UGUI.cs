@@ -47,7 +47,7 @@ namespace psyhack
             canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
             canvasScaler.scaleFactor = 1;
             canvasScaler.referencePixelsPerUnit = 100;
-            canvasScaler.referenceResolution = new Vector2(1920, 1080);
+            canvasScaler.referenceResolution = new Vector2(2560, 1440);
             canvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
             instance.rootCanvasScaler = canvasScaler;
 
