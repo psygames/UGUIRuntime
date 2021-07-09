@@ -40,6 +40,12 @@ namespace psyhack
             return toggle;
         }
 
+        public static Toggle SetValue(this Toggle toggle, bool isOn)
+        {
+            toggle.isOn = isOn;
+            return toggle;
+        }
+
         public static Toggle SetListener(this Toggle toggle, UnityEngine.Events.UnityAction<bool> action)
         {
             toggle.onValueChanged.RemoveAllListeners();
