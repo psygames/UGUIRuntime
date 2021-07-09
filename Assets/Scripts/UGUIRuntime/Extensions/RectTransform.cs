@@ -24,13 +24,13 @@ namespace psyhack
             return rectTransform;
         }
 
-        public static RectTransform SetPadding(this RectTransform rectTransform, float all = 0f)
+        private static RectTransform SetPadding(this RectTransform rectTransform, float all = 0f)
         {
             rectTransform.SetPadding(all, all);
             return rectTransform;
         }
 
-        public static RectTransform SetPadding(this RectTransform rectTransform, float horizontal, float vertical)
+        private static RectTransform SetPadding(this RectTransform rectTransform, float horizontal, float vertical)
         {
             rectTransform.anchorMin = Vector2.zero;
             rectTransform.anchorMax = Vector2.one;
