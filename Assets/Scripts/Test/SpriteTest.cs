@@ -16,14 +16,14 @@ public class SpriteTest : MonoBehaviour
         // set host
         UGUI.SetHost("http://39.105.150.229:8741/psyhack_img/");
 
-        UIBuilder.CreateRoot();
-        UIBuilder.CreateBackground();
-        UIBuilder.CreateText("简单构建UI");
-        UIBuilder.CreateSwitch("开关功能", (isOn) => { Debug.Log("开关: " + isOn); });
-        UIBuilder.CreateSlider("滑动条功能", (val) => { Debug.Log("滑动条: " + val); });
+        SimpleBuilder.CreateRoot();
+        SimpleBuilder.CreateBackground();
+        SimpleBuilder.CreateText("简单构建UI");
+        SimpleBuilder.CreateSwitch("开关功能", (isOn) => { Debug.Log("开关: " + isOn); });
+        SimpleBuilder.CreateSlider("滑动条功能", (val) => { Debug.Log("滑动条: " + val); });
 
         var options = new string[] { "选项1", "选项2", "选项3", "选项4", "选项5", "选项6" };
-        UIBuilder.CreateDropdown("选项卡功能", options, (index) => { Debug.Log(options[index]); });
+        SimpleBuilder.CreateDropdown("选项卡功能", options, (index) => { Debug.Log(options[index]); });
     }
 
     public void Build()

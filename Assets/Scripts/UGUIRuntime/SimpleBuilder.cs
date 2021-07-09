@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace psyhack
 {
-    public static class UIBuilder
+    public static class SimpleBuilder
     {
         public static float space = 3;
         public static float height = 50;
@@ -67,7 +67,8 @@ namespace psyhack
             var _switch = item.AddSwitch()
                 .SetPosition(titleWidth + (contentWidth - 82) / 2, 2)
                 .SetSize(82, height - 4)
-                .SetKnobPosition(-17, 17);
+                .SetKnobPosition(-17, 17)
+                .SetListener(listener);
 
             _switch.GetBackground().SetSprite("circle", 20).SetColor(Color.white * 0.5f);
             _switch.GetCheckmark().SetSize(68, 36).SetSprite("circle", 20).SetColor(new Color32(80, 180, 80, 255));
@@ -84,7 +85,8 @@ namespace psyhack
             var slider = item.AddSlider()
                 .SetPosition(titleWidth + 10, (height - 20) / 2)
                 .SetSize(contentWidth - 20, 20)
-                .SetPadding(10);
+                .SetPadding(10)
+                .SetListener(listener);
 
             slider.GetBackground().SetSprite("rectr", 10).SetColor(Color.gray);
             slider.GetFill().SetSprite("rectr", 10).SetColor(Color.gray);
