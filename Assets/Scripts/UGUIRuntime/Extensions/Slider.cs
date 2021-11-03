@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace psyhack
+namespace UGUIRuntime
 {
     public static partial class UGUIRuntimeExtensions
     {
@@ -29,15 +29,15 @@ namespace psyhack
             return handle;
         }
 
-        public static Slider SetPadding(this Slider slider, float padding)
+        public static Slider SetMargin(this Slider slider, float margin)
         {
             var handleArea = slider.GetRectTransform().GetOrAddNode("Handle Slide Area");
-            handleArea.SetSizeDelta(Vector2.left * padding * 2);
+            handleArea.SetSizeDelta(Vector2.left * margin * 2);
             var fillArea = slider.GetRectTransform().GetOrAddNode("Fill Area");
-            fillArea.SetSizeDelta(Vector2.left * padding * 2);
+            fillArea.SetSizeDelta(Vector2.left * margin * 2);
             var fill = fillArea.GetOrAddNode("Fill");
-            fill.SetSizeDelta(Vector2.right * padding * 2);
-            fill.SetAnchoredPosition(Vector2.left * padding);
+            fill.SetSizeDelta(Vector2.right * margin * 2);
+            fill.SetAnchoredPosition(Vector2.left * margin);
             return slider;
         }
 

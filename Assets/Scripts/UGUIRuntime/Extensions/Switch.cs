@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace psyhack
+namespace UGUIRuntime
 {
     public class Switch : MonoBehaviour
     {

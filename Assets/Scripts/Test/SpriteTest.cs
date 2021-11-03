@@ -1,4 +1,4 @@
-﻿using psyhack;
+﻿using UGUIRuntime;
 using UnityEngine;
 
 public class SpriteTest : MonoBehaviour
@@ -7,8 +7,8 @@ public class SpriteTest : MonoBehaviour
     {
         UGUI.Create();
         Http.Create();
-        // Build();
-        SimpleBuild();
+        Build();
+        // SimpleBuild();
     }
 
     public void SimpleBuild()
@@ -53,9 +53,10 @@ public class SpriteTest : MonoBehaviour
 
         // test button
         var button = ui.AddButton("button")
-            .SetPosition(30, 40).SetSize(300, 100)
+            //.SetPosition(30, 40).SetSize(300, 100)
             .SetSprite("rectr", 10)
             .SetText("测试按钮")
+            .SetT()
             .SetColor(Color.gray)
             .SetListener(() =>
             {
@@ -109,7 +110,7 @@ public class SpriteTest : MonoBehaviour
         // test slider
         var slider = ui.AddSlider()
             .SetPosition(30, 350).SetSize(200, 20)
-            .SetPadding(15)
+            .SetMargin(15)
             .SetListener((val) =>
             {
                 Debug.Log("slider: " + val);
@@ -127,7 +128,7 @@ public class SpriteTest : MonoBehaviour
             .SetOptions(options)
             .SetDropdownHeight(160)
             .SetItemHeight(40)
-            .SetTextPadding(12)
+            .SetTextMargin(12)
             .SetListener((val) =>
             {
                 Debug.Log("dropdown: " + options[val]);

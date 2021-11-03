@@ -2,7 +2,7 @@
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace psyhack
+namespace UGUIRuntime
 {
     public class UGUI : MonoBehaviour
     {

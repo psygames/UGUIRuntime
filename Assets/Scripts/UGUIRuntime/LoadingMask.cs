@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace psyhack
+namespace UGUIRuntime
 {
     internal class LoadingMask : MonoBehaviour
     {

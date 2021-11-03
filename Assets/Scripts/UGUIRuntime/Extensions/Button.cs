@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-namespace psyhack
+namespace UGUIRuntime
 {
     public static partial class UGUIRuntimeExtensions
     {
@@ -14,7 +14,7 @@ namespace psyhack
         public static Button SetText(this Button button, string text)
         {
             var comp = button.GetRectTransform().GetOrAddNode("Text").GetOrAddComponent<Text>();
-            comp.GetRectTransform().SetPadding().SetPivotCenter();
+            comp.GetRectTransform().SetMargin().SetPivotCenter();
             comp.SetFont();
             comp.text = text;
             comp.alignment = TextAnchor.MiddleCenter;

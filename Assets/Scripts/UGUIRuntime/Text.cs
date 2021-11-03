@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace psyhack
+namespace UGUIRuntime
 {
     public static partial class UGUIRuntimeExtensions
     {

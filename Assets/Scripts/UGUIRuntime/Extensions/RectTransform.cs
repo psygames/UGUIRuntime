@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace psyhack
+namespace UGUIRuntime
 {
     public static partial class UGUIRuntimeExtensions
     {
@@ -24,18 +24,24 @@ namespace psyhack
             return rectTransform;
         }
 
-        private static RectTransform SetPadding(this RectTransform rectTransform, float all = 0f)
+        private static RectTransform SetMargin(this RectTransform rectTransform, float all = 0f)
         {
-            rectTransform.SetPadding(all, all);
+            rectTransform.SetMargin(all, all, all, all);
             return rectTransform;
         }
 
-        private static RectTransform SetPadding(this RectTransform rectTransform, float horizontal, float vertical)
+        private static RectTransform SetMargin(this RectTransform rectTransform, float horizontal, float vertical)
+        {
+            rectTransform.SetMargin(vertical, horizontal, vertical, horizontal);
+            return rectTransform;
+        }
+
+        private static RectTransform SetMargin(this RectTransform rectTransform, float top, float right, float down, float left)
         {
             rectTransform.anchorMin = Vector2.zero;
             rectTransform.anchorMax = Vector2.one;
-            rectTransform.sizeDelta = new Vector2(-horizontal * 2, -vertical * 2);
-            rectTransform.anchoredPosition = new Vector2(horizontal, vertical);
+            rectTransform.sizeDelta = new Vector2(-left - right, -top - down);
+            rectTransform.anchoredPosition = new Vector2(left, top);
             return rectTransform;
         }
 
@@ -166,7 +172,7 @@ namespace psyhack
         public static Toggle AddToggle(this RectTransform rectTransform, string name = null)
         {
             var node = rectTransform.AddNode(name ?? "toggle");
-            node.AddNode("Background").SetPadding().AddNode("Checkmark").SetCenter();
+            node.AddNode("Background").SetMargin().AddNode("Checkmark").SetCenter();
             var toggle = node.gameObject.AddComponent<Toggle>();
             return toggle;
         }
@@ -183,10 +189,10 @@ namespace psyhack
         public static Slider AddSlider(this RectTransform rectTransform, string name = null)
         {
             var node = rectTransform.AddNode(name ?? "slider");
-            node.AddNode("Background").SetPadding().SetPivotCenter();
-            node.AddNode("Fill Area").SetPadding().SetPivotCenter().AddNode("Fill")
+            node.AddNode("Background").SetMargin().SetPivotCenter();
+            node.AddNode("Fill Area").SetMargin().SetPivotCenter().AddNode("Fill")
                 .SetAnchorMinMax(Vector2.zero, Vector2.one);
-            node.AddNode("Handle Slide Area").SetPadding().SetPivotCenter()
+            node.AddNode("Handle Slide Area").SetMargin().SetPivotCenter()
                 .AddNode("Position").SetCenter()
                 .AddNode("Handle").SetCenter();
             var slider = node.gameObject.AddComponent<Slider>();
@@ -199,7 +205,7 @@ namespace psyhack
             var dropdown = node.GetOrAddComponent<Dropdown>();
             dropdown.image = node.GetOrAddComponent<Image>();
 
-            var label = node.AddNode("Label").SetPadding(10, 0).GetOrAddComponent<Text>()
+            var label = node.AddNode("Label").SetMargin(10, 0).GetOrAddComponent<Text>()
                 .SetFont().SetColor(Color.black);
             label.alignment = TextAnchor.MiddleLeft;
 
@@ -218,7 +224,7 @@ namespace psyhack
             template.GetOrAddComponent<CanvasGroup>();
 
             var viewport = template.AddNode("Viewport");
-            viewport.SetPadding();
+            viewport.SetMargin();
             viewport.GetOrAddComponent<Image>().SetColor(new Color32(0, 0, 0, 0));
             viewport.GetOrAddComponent<RectMask2D>();
 
@@ -232,9 +238,9 @@ namespace psyhack
             item.SetPivotCenter();
             item.SetSizeDelta(new Vector2(0, 30));
             var itemToggle = item.GetOrAddComponent<Toggle>();
-            itemToggle.targetGraphic = item.AddNode("Item Background").SetPadding().GetOrAddComponent<Image>();
-            itemToggle.graphic = item.AddNode("Item Checkmark").SetPadding().GetOrAddComponent<Image>().SetColor(Color.gray);
-            var itemLabel = item.AddNode("Item Label").SetPadding(10, 0).GetOrAddComponent<Text>()
+            itemToggle.targetGraphic = item.AddNode("Item Background").SetMargin().GetOrAddComponent<Image>();
+            itemToggle.graphic = item.AddNode("Item Checkmark").SetMargin().GetOrAddComponent<Image>().SetColor(Color.gray);
+            var itemLabel = item.AddNode("Item Label").SetMargin(10, 0).GetOrAddComponent<Text>()
                 .SetFont().SetColor(Color.black); ;
             itemLabel.alignment = TextAnchor.MiddleLeft;
 

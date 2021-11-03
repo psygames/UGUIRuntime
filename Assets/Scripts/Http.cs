@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace psyhack
+namespace UGUIRuntime
 {
     public class Http
     {
@@ -23,6 +23,7 @@ namespace psyhack
 
         public static void Download(string url, Action<byte[]> callback)
         {
+
             instance.Create(url, callback);
         }
     }
@@ -127,7 +128,7 @@ namespace psyhack
                     request.UserAgent = userAgent;
                     var response = request.GetResponse() as System.Net.HttpWebResponse;
                     var responseStream = response.GetResponseStream();
-                    byte[] bArr = new byte[1024];
+                    byte[] bArr = new byte[1024 * 8];
                     int size = responseStream.Read(bArr, 0, bArr.Length);
                     var ms = new System.IO.MemoryStream();
                     while (size > 0)
@@ -141,9 +142,9 @@ namespace psyhack
                     response.Close();
                     return bytes;
                 }
-                catch (Exception ex)
+                catch
                 {
-                    // Log.Print(ex);
+
                 }
                 return null;
             }

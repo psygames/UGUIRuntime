@@ -2,7 +2,7 @@
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace psyhack
+namespace UGUIRuntime
 {
     public static class SimpleBuilder
     {
@@ -89,7 +89,7 @@ namespace psyhack
             var slider = item.AddSlider()
                 .SetPosition(titleWidth + 10, (height - 20) / 2)
                 .SetSize(contentWidth - 20, 20)
-                .SetPadding(10)
+                .SetMargin(10)
                 .SetListener(listener)
                 .SetValue(value);
 
@@ -113,7 +113,7 @@ namespace psyhack
                 .SetDropdownHeight(160)
                 .SetDropdownPaddingTop(0)
                 .SetItemHeight(40)
-                .SetTextPadding(0)
+                .SetTextMargin(0)
                 .SetValue(index);
 
             dropdown.GetBackground().SetSprite("rect", 10).SetColor(Color.clear);

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace psyhack
+namespace UGUIRuntime
 {
     public static partial class UGUIRuntimeExtensions
     {
@@ -23,6 +23,12 @@ namespace psyhack
             return mark;
         }
 
+        public static T SetT<T>(this T t) where T : UnityEngine.EventSystems.UIBehaviour
+        {
+            t.GetRectTransform().SetMargin(0);
+            return t;
+        }
+
         public static Toggle SetText(this Toggle toggle, string text, float width = 0f)
         {
             var comp = toggle.GetRectTransform().GetOrAddNode("Label").GetOrAddComponent<Text>();
@@ -32,7 +38,7 @@ namespace psyhack
             var toggleWidth = toggle.GetRectTransform().rect.width;
             width = width == 0 ? toggleWidth * 2 : width;
             comp.GetRectTransform()
-                .SetPadding()
+                .SetMargin()
                 .SetAnchoredPosition(new Vector2(toggleWidth + 3, -0.5f))
                 .SetSizeDelta(new Vector2(width - toggleWidth, 0));
             comp.horizontalOverflow = HorizontalWrapMode.Overflow;

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace psyhack
+namespace UGUIRuntime
 {
     public static partial class UGUIRuntimeExtensions
     {
@@ -143,10 +143,10 @@ namespace psyhack
             return comp;
         }
 
-        public static Dropdown SetTextPadding(this Dropdown comp, float horizontal)
+        public static Dropdown SetTextMargin(this Dropdown comp, float horizontal)
         {
-            comp.GetLabel().GetRectTransform().SetPadding(horizontal, 0);
-            comp.GetItemLabel().GetRectTransform().SetPadding(horizontal, 0);
+            comp.GetLabel().GetRectTransform().SetMargin(horizontal, 0);
+            comp.GetItemLabel().GetRectTransform().SetMargin(horizontal, 0);
             return comp;
         }
     }
