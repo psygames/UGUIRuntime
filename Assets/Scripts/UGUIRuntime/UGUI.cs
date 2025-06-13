@@ -7,18 +7,11 @@ namespace UGUIRuntime
     public class UGUI : MonoBehaviour
     {
         public const int UI_LAYER = 5;
-        public static string host { get { return instance.remoteUrlHost; } }
         public static Canvas canvas { get { return instance.rootCanvas; } }
 
         private static UGUI instance;
         private Canvas rootCanvas;
         private CanvasScaler rootCanvasScaler;
-        private string remoteUrlHost;
-
-        public static void SetHost(string host)
-        {
-            instance.remoteUrlHost = host;
-        }
 
         public static RectTransform CreateUIRoot(string name = "[UIRoot]")
         {
@@ -47,7 +40,7 @@ namespace UGUIRuntime
             canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
             canvasScaler.scaleFactor = 1;
             canvasScaler.referencePixelsPerUnit = 100;
-            canvasScaler.referenceResolution = new Vector2(2560, 1440);
+            canvasScaler.referenceResolution = new Vector2(1920, 1080);
             canvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
             instance.rootCanvasScaler = canvasScaler;
 
@@ -75,9 +68,6 @@ namespace UGUIRuntime
 
         public static void Destroy()
         {
-            SpriteLoader.ClearCache();
-            LoadingMask.Destroy();
-
             if (!instance) return;
             GameObject.Destroy(instance.gameObject);
             instance = null;

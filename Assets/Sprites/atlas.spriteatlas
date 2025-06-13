@@ -28,11 +28,21 @@ SpriteAtlas:
       allowAlphaSplitting: 0
       enableRotation: 1
       enableTightPacking: 1
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
     variantMultiplier: 1
     packables:
     - {fileID: 102900000, guid: 0c86debd361c14c42b97025ce0c73f77, type: 3}
-    totalSpriteSurfaceArea: 17793
     bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+    packedSpriteRenderDataKeys:
+    - 71cc4bd102d5230479b2ccefd6bec258: 21300000
+    - 2cf44815909aabe4c9654a2c83f2b137: 21300000
+    - 06805e6684af84002b13647eec7b722d: 21300000
+    - 8e9e7487ef83b704b90e876c78703de6: 21300000
+    - 1f0b48fa5023941348c8dfd18965782f: 21300000
+    - 5aee34ee996d4462ab0f500e47c139db: 21300000
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: 71cc4bd102d5230479b2ccefd6bec258, type: 3}
@@ -48,5 +58,6 @@ SpriteAtlas:
   - checkbox
   - rectr
   - circle
+  m_RenderDataMap: {}
   m_Tag: atlas
   m_IsVariant: 0
