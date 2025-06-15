@@ -8,7 +8,7 @@ namespace UGUIRuntime
     {
         private static Dictionary<int, Font> fonts = new Dictionary<int, Font>();
 
-        public static Text SetFont(this Text text, int size = 24, string fontname = "Arial")
+        public static Text SetFont(this Text text, int size = 24, string fontname = "Microsoft YaHei")
         {
             if (!fonts.TryGetValue(size, out var font))
             {

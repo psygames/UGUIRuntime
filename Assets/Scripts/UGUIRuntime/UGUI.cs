@@ -8,15 +8,11 @@ namespace UGUIRuntime
     {
         public const int UI_LAYER = 5;
         public static Canvas canvas { get { return instance.rootCanvas; } }
+        public static CanvasScaler scaler { get { return instance.rootCanvasScaler; } }
 
         private static UGUI instance;
         private Canvas rootCanvas;
         private CanvasScaler rootCanvasScaler;
-
-        public static RectTransform CreateUIRoot(string name = "[UIRoot]")
-        {
-            return instance.rootCanvas.GetComponent<RectTransform>().AddNode(name);
-        }
 
         public static UGUI Create()
         {

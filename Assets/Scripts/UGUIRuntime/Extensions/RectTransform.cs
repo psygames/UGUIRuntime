@@ -107,6 +107,11 @@ namespace UGUIRuntime
             return rectTransform;
         }
 
+        public static RectTransform SetRect(this RectTransform rectTransform, Rect rect)
+        {
+            return rectTransform.SetPosition(rect.position).SetSize(rect.size);
+        }
+
         public static RectTransform SetPosition(this RectTransform rectTransform, float x, float y)
         {
             return rectTransform.SetPosition(new Vector2(x, y));
@@ -127,6 +132,20 @@ namespace UGUIRuntime
         public static RectTransform SetSize(this RectTransform rectTransform, Vector2 size)
         {
             rectTransform.SetSizeDelta(size);
+            return rectTransform;
+        }
+
+        public static RectTransform Anchor(this RectTransform rectTransform, Vector2 min, Vector2 max)
+        {
+            rectTransform.anchorMin = min;
+            rectTransform.anchorMax = max;
+            return rectTransform;
+        }
+
+        public static RectTransform AnchorFull(this RectTransform rectTransform)
+        {
+            rectTransform.anchorMin = Vector2.zero;
+            rectTransform.anchorMax = Vector2.one;
             return rectTransform;
         }
         #endregion
@@ -159,14 +178,16 @@ namespace UGUIRuntime
             return button;
         }
 
-        public static Text AddText(this RectTransform rectTransform, string name = null)
+        public static Text AddText(this RectTransform rectTransform, string text, string name = null)
         {
             var node = rectTransform.AddNode(name ?? "text");
-            var text = node.gameObject.AddComponent<Text>();
-            text.alignment = TextAnchor.MiddleLeft;
-            text.fontSize = 24;
-            text.raycastTarget = false;
-            return text;
+            var comp = node.gameObject.AddComponent<Text>();
+            comp.alignment = TextAnchor.MiddleLeft;
+            comp.raycastTarget = false;
+            comp.SetFont();
+            comp.SetSize(160, 30);
+            comp.SetText(text);
+            return comp;
         }
 
         public static Toggle AddToggle(this RectTransform rectTransform, string name = null)

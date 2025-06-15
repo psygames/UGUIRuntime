@@ -6,7 +6,8 @@ public class SpriteTest : MonoBehaviour
     private void Awake()
     {
         UGUI.Create();
-        SimpleBuild();
+        // SimpleBuild();
+        Window.Create("Test", new Rect(100,200,200,200));
     }
 
     public void SimpleBuild()
@@ -29,5 +30,10 @@ public class SpriteTest : MonoBehaviour
 
         var options = new string[] { "选项1", "选项2", "选项3", "选项4", "选项5", "选项6" };
         SimpleBuilder.CreateDropdown("选项卡功能", 1, options, (index) => { Debug.Log(options[index]); });
+    }
+
+    private void OnGUI()
+    {
+        GUI.Button(new Rect(10, 10, 100, 30), "按钮1");
     }
 }

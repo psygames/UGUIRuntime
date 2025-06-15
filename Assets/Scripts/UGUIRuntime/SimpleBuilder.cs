@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Xml.Linq;
+using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
@@ -23,7 +24,7 @@ namespace UGUIRuntime
 
         public static RectTransform CreateRoot()
         {
-            root = UGUI.CreateUIRoot();
+            root = UGUI.canvas.GetComponent<RectTransform>().AddNode("SB");
             root.SetSize(rootWidth, rootHeight);
             return root;
         }
@@ -31,7 +32,6 @@ namespace UGUIRuntime
         public static Image CreateBackground()
         {
             var item = root.AddImage()
-                .SetSprite("rect")
                 .SetSize(root.rect.width, root.rect.height)
                 .SetColor(Color.black * 0.8f);
             return item;
@@ -39,8 +39,7 @@ namespace UGUIRuntime
 
         private static Text AddText(RectTransform root, string text)
         {
-            return root.AddText()
-                .SetText(text)
+            return root.AddText(text)
                 .SetPosition(indent, -4)
                 .SetSize(titleWidth - indent, height)
                 .SetFont(fontSize, fontname);
