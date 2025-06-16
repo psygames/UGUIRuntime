@@ -25,7 +25,7 @@ namespace UGUIRuntime
 
         public static T SetT<T>(this T t) where T : UnityEngine.EventSystems.UIBehaviour
         {
-            t.GetRectTransform().SetMargin(0);
+            t.GetRectTransform().Margin(0);
             return t;
         }
 
@@ -38,7 +38,7 @@ namespace UGUIRuntime
             var toggleWidth = toggle.GetRectTransform().rect.width;
             width = width == 0 ? toggleWidth * 2 : width;
             comp.GetRectTransform()
-                .SetMargin()
+                .Margin()
                 .SetAnchoredPosition(new Vector2(toggleWidth + 3, -0.5f))
                 .SetSizeDelta(new Vector2(width - toggleWidth, 0));
             comp.horizontalOverflow = HorizontalWrapMode.Overflow;

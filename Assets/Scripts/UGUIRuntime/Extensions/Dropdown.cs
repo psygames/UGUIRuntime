@@ -145,8 +145,8 @@ namespace UGUIRuntime
 
         public static Dropdown SetTextMargin(this Dropdown comp, float horizontal)
         {
-            comp.GetLabel().GetRectTransform().SetMargin(horizontal, 0);
-            comp.GetItemLabel().GetRectTransform().SetMargin(horizontal, 0);
+            comp.GetLabel().GetRectTransform().Margin(horizontal, 0);
+            comp.GetItemLabel().GetRectTransform().Margin(horizontal, 0);
             return comp;
         }
     }

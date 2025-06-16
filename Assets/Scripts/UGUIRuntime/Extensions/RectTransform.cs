@@ -24,24 +24,30 @@ namespace UGUIRuntime
             return rectTransform;
         }
 
-        private static RectTransform SetMargin(this RectTransform rectTransform, float all = 0f)
+        public static RectTransform Margin(this RectTransform rectTransform, float all = 0f)
         {
-            rectTransform.SetMargin(all, all, all, all);
+            rectTransform.Margin(all, all, all, all);
             return rectTransform;
         }
 
-        private static RectTransform SetMargin(this RectTransform rectTransform, float horizontal, float vertical)
+        public static RectTransform MarginLeft(this RectTransform rectTransform, float left)
         {
-            rectTransform.SetMargin(vertical, horizontal, vertical, horizontal);
+            rectTransform.Margin(0, 0, 0, left);
             return rectTransform;
         }
 
-        private static RectTransform SetMargin(this RectTransform rectTransform, float top, float right, float down, float left)
+        public static RectTransform Margin(this RectTransform rectTransform, float horizontal, float vertical)
+        {
+            rectTransform.Margin(vertical, horizontal, vertical, horizontal);
+            return rectTransform;
+        }
+
+        public static RectTransform Margin(this RectTransform rectTransform, float top, float right, float down, float left)
         {
             rectTransform.anchorMin = Vector2.zero;
             rectTransform.anchorMax = Vector2.one;
-            rectTransform.sizeDelta = new Vector2(-left - right, -top - down);
-            rectTransform.anchoredPosition = new Vector2(left, top);
+            rectTransform.sizeDelta = new Vector2(-left - right,  - down - top);
+            rectTransform.anchoredPosition = new Vector2(left, -top);
             return rectTransform;
         }
 
@@ -135,6 +141,13 @@ namespace UGUIRuntime
             return rectTransform;
         }
 
+        public static RectTransform AnchorTop(this RectTransform rectTransform, float height)
+        {
+            rectTransform.SetAnchorMinMax(Vector2.up, Vector2.one);
+            rectTransform.sizeDelta = new Vector2(0, height);
+            return rectTransform;
+        }
+
         #endregion
 
         #region Add Items
@@ -182,7 +195,7 @@ namespace UGUIRuntime
         public static Toggle AddToggle(this RectTransform rectTransform, string name = null)
         {
             var node = rectTransform.AddNode(name ?? "toggle");
-            node.AddNode("Background").SetMargin().AddNode("Checkmark").SetCenter();
+            node.AddNode("Background").Margin().AddNode("Checkmark").SetCenter();
             var toggle = node.gameObject.AddComponent<Toggle>();
             return toggle;
         }
@@ -199,10 +212,10 @@ namespace UGUIRuntime
         public static Slider AddSlider(this RectTransform rectTransform, string name = null)
         {
             var node = rectTransform.AddNode(name ?? "slider");
-            node.AddNode("Background").SetMargin().SetPivotCenter();
-            node.AddNode("Fill Area").SetMargin().SetPivotCenter().AddNode("Fill")
+            node.AddNode("Background").Margin().SetPivotCenter();
+            node.AddNode("Fill Area").Margin().SetPivotCenter().AddNode("Fill")
                 .SetAnchorMinMax(Vector2.zero, Vector2.one);
-            node.AddNode("Handle Slide Area").SetMargin().SetPivotCenter()
+            node.AddNode("Handle Slide Area").Margin().SetPivotCenter()
                 .AddNode("Position").SetCenter()
                 .AddNode("Handle").SetCenter();
             var slider = node.gameObject.AddComponent<Slider>();
@@ -215,7 +228,7 @@ namespace UGUIRuntime
             var dropdown = node.GetOrAddComponent<Dropdown>();
             dropdown.image = node.GetOrAddComponent<Image>();
 
-            var label = node.AddNode("Label").SetMargin(10, 0).GetOrAddComponent<Text>()
+            var label = node.AddNode("Label").Margin(10, 0).GetOrAddComponent<Text>()
                 .SetFont().SetColor(Color.black);
             label.alignment = TextAnchor.MiddleLeft;
 
@@ -234,7 +247,7 @@ namespace UGUIRuntime
             template.GetOrAddComponent<CanvasGroup>();
 
             var viewport = template.AddNode("Viewport");
-            viewport.SetMargin();
+            viewport.Margin();
             viewport.GetOrAddComponent<Image>().SetColor(new Color32(0, 0, 0, 0));
             viewport.GetOrAddComponent<RectMask2D>();
 
@@ -248,9 +261,9 @@ namespace UGUIRuntime
             item.SetPivotCenter();
             item.SetSizeDelta(new Vector2(0, 30));
             var itemToggle = item.GetOrAddComponent<Toggle>();
-            itemToggle.targetGraphic = item.AddNode("Item Background").SetMargin().GetOrAddComponent<Image>();
-            itemToggle.graphic = item.AddNode("Item Checkmark").SetMargin().GetOrAddComponent<Image>().SetColor(Color.gray);
-            var itemLabel = item.AddNode("Item Label").SetMargin(10, 0).GetOrAddComponent<Text>()
+            itemToggle.targetGraphic = item.AddNode("Item Background").Margin().GetOrAddComponent<Image>();
+            itemToggle.graphic = item.AddNode("Item Checkmark").Margin().GetOrAddComponent<Image>().SetColor(Color.gray);
+            var itemLabel = item.AddNode("Item Label").Margin(10, 0).GetOrAddComponent<Text>()
                 .SetFont().SetColor(Color.black); ;
             itemLabel.alignment = TextAnchor.MiddleLeft;
 

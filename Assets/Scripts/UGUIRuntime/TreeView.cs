@@ -4,13 +4,13 @@ using UnityEngine.UI;
 
 namespace UGUIRuntime
 {
-    public class Window : MonoBehaviour
+    public class TreeView : MonoBehaviour
     {
         private RectTransform root;
 
-        public static Window Create(string title, Rect rect)
+        public static TreeView Create(string title, Rect rect)
         {
-            var wind = new GameObject(title).AddComponent<Window>();
+            var wind = new GameObject(title).AddComponent<TreeView>();
             wind.root.SetRect(rect);
             wind.SetTitle(title);
             return wind;

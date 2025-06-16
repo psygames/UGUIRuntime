@@ -1,13 +1,13 @@
 ﻿using UGUIRuntime;
 using UnityEngine;
 
-public class SpriteTest : MonoBehaviour
+public class Test : MonoBehaviour
 {
     private void Awake()
     {
         UGUI.Create();
         // SimpleBuild();
-        Window.Create("Test", new Rect(100, 200, 800, 600));
+        Window.Create("功能测试", new Rect(100, 200, 800, 600));
     }
 
     public void SimpleBuild()

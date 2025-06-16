@@ -14,7 +14,7 @@ namespace UGUIRuntime
         public static Button SetText(this Button button, string text)
         {
             var comp = button.GetRectTransform().GetOrAddNode("Text").GetOrAddComponent<Text>();
-            comp.GetRectTransform().SetMargin().SetPivotCenter();
+            comp.GetRectTransform().Margin().SetPivotCenter();
             comp.SetFont();
             comp.text = text;
             comp.alignment = TextAnchor.MiddleCenter;
