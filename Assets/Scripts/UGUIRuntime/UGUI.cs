@@ -18,6 +18,8 @@ namespace UGUIRuntime
         {
             if (instance) return instance;
 
+            SpriteMgr.Init();
+
             var obj = new GameObject("[UGUI Runtime]");
             GameObject.DontDestroyOnLoad(obj);
             instance = obj.AddComponent<UGUI>();

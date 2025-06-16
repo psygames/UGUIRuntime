@@ -24,7 +24,10 @@ namespace UGUIRuntime
         {
             transform.SetParent(UGUI.canvas.transform, false);
             root = gameObject.AddComponent<RectTransform>();
-            root.AddImage().SetColor(Color.gray * 0.8f).rectTransform.AnchorFull();
+            // bg
+            root.AddImage().SetColor(Color.gray);
+            root.AddImage().SetColor(Color.green).SetType(Image.Type.Sliced, false);
+            // title
         }
     }
 }

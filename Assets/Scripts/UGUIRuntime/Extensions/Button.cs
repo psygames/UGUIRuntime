@@ -21,11 +21,11 @@ namespace UGUIRuntime
             return button;
         }
 
-        public static Button SetSprite(this Button button, string name, int border = 0)
+        public static Button SetSprite(this Button button, string name)
         {
             if (button.image)
             {
-                button.image.SetSprite(name, border);
+                button.image.SetSprite(name);
             }
             return button;
         }

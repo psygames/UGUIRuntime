@@ -135,19 +135,6 @@ namespace UGUIRuntime
             return rectTransform;
         }
 
-        public static RectTransform Anchor(this RectTransform rectTransform, Vector2 min, Vector2 max)
-        {
-            rectTransform.anchorMin = min;
-            rectTransform.anchorMax = max;
-            return rectTransform;
-        }
-
-        public static RectTransform AnchorFull(this RectTransform rectTransform)
-        {
-            rectTransform.anchorMin = Vector2.zero;
-            rectTransform.anchorMax = Vector2.one;
-            return rectTransform;
-        }
         #endregion
 
         #region Add Items
@@ -166,6 +153,8 @@ namespace UGUIRuntime
             var node = rectTransform.AddNode(name ?? "image");
             var image = node.gameObject.AddComponent<Image>();
             image.raycastTarget = false;
+            image.SetSprite("rect");
+            image.rectTransform.SetAnchorMinMax(Vector2.zero, Vector2.one);
             return image;
         }
 

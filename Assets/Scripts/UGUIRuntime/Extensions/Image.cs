@@ -4,9 +4,9 @@ namespace UGUIRuntime
 {
     public static partial class UGUIRuntimeExtensions
     {
-        public static Image SetSprite(this Image image, string name,
-            int border = 0, bool setNativeSize = false, bool showLoading = false)
+        public static Image SetSprite(this Image image, string name)
         {
+            image.sprite = SpriteMgr.GetSprite(name);
             return image;
         }
 
@@ -25,6 +25,13 @@ namespace UGUIRuntime
         public static Image SetSize(this Image comp, float w, float h)
         {
             comp.GetRectTransform().SetSize(w, h);
+            return comp;
+        }
+
+        public static Image SetType(this Image comp, Image.Type type, bool fillCenter = true)
+        {
+            comp.type = type;
+            comp.fillCenter = fillCenter;
             return comp;
         }
     }

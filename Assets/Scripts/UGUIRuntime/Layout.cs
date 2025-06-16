@@ -1,11 +1,10 @@
-﻿using System.Xml.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace UGUIRuntime
 {
-    public static class SimpleBuilder
+    public static class Layout
     {
         public static float space = 3;
         public static float height = 50;
@@ -48,7 +47,6 @@ namespace UGUIRuntime
         public static RectTransform CreateItem()
         {
             var item = root.AddImage()
-                .SetSprite("rect", 10)
                 .SetPosition(0, position)
                 .SetSize(rootWidth, height)
                 .SetColor(Color.white * 0.3f);
@@ -73,8 +71,8 @@ namespace UGUIRuntime
                 .SetListener(listener)
                 .SetValue(isOn);
 
-            _switch.GetBackground().SetSprite("circle", 20).SetColor(Color.white * 0.5f);
-            _switch.GetCheckmark().SetSize(72, 36).SetSprite("circle", 20).SetColor(new Color32(80, 180, 80, 255));
+            _switch.GetBackground().SetSprite("circle").SetColor(Color.white * 0.5f);
+            _switch.GetCheckmark().SetSize(72, 36).SetSprite("circle").SetColor(new Color32(80, 180, 80, 255));
             _switch.GetKnob().SetSize(38, 38).SetSprite("circle").SetColor(Color.white * 0.9f);
 
             return _switch;
@@ -92,9 +90,9 @@ namespace UGUIRuntime
                 .SetListener(listener)
                 .SetValue(value);
 
-            slider.GetBackground().SetSprite("rectr", 10).SetColor(Color.white * 0.5f);
-            slider.GetFill().SetSprite("rectr", 10).SetColor(Color.white * 0.8f);
-            slider.GetHandle().SetSprite("rectr", 10).SetSize(26, 40);
+            slider.GetBackground().SetSprite("rectr").SetColor(Color.white * 0.5f);
+            slider.GetFill().SetSprite("rectr").SetColor(Color.white * 0.8f);
+            slider.GetHandle().SetSprite("rectr").SetSize(26, 40);
 
             return slider;
         }
@@ -115,11 +113,11 @@ namespace UGUIRuntime
                 .SetTextMargin(0)
                 .SetValue(index);
 
-            dropdown.GetBackground().SetSprite("rect", 10).SetColor(Color.clear);
+            dropdown.GetBackground().SetSprite("rect").SetColor(Color.clear);
             dropdown.GetLabel().SetPosition(0, -4).SetAlignment(TextAnchor.MiddleCenter).SetFont(fontSize, fontname).SetColor(Color.white);
-            dropdown.GetDropdownBackground().SetSprite("rect", 10).SetColor(Color.clear);
-            dropdown.GetItemBackground().SetSprite("rect", 10).SetColor(new Color32(85, 85, 85, 240));
-            dropdown.GetItemCheckmark().SetSprite("rect", 10).SetColor(Color.black * 0.2f);
+            dropdown.GetDropdownBackground().SetSprite("rect").SetColor(Color.clear);
+            dropdown.GetItemBackground().SetSprite("rect").SetColor(new Color32(85, 85, 85, 240));
+            dropdown.GetItemCheckmark().SetSprite("rect").SetColor(Color.black * 0.2f);
             dropdown.GetItemLabel().SetPosition(0, -4).SetAlignment(TextAnchor.MiddleCenter).SetFont(fontSize, fontname).SetColor(Color.white);
             return dropdown;
         }
