@@ -1,36 +1,24 @@
 ﻿using UnityEngine;
-using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 
 namespace UGUIRuntime
 {
-    public class Window : MonoBehaviour
+    public class Window : CustomUI
     {
-        private RectTransform root;
-
-        public static Window Create(string title, Rect rect)
-        {
-            var wind = new GameObject(title).AddComponent<Window>();
-            wind.root.SetRect(rect);
-            wind.SetTitle(title);
-            return wind;
-        }
-
-        private void SetTitle(string title)
+        public Window SetTitle(string title)
         {
             // title
-            root.AddImage().SetColor(Color.green).SetType(Image.Type.Sliced, false).rectTransform.AnchorTop(40)
-                .AddImage().SetColor(Color.black * 0.6f).rectTransform.Margin(2)
-                .AddText(title).rectTransform.Margin(0, 0, 6, 10);
+            root.AddImage().SetColor(Color.green).SetType(Image.Type.Sliced, false).RT().AnchorTop(40)
+                .AddImage().SetColor(Color.black * 0.6f).RT().Margin(2)
+                .AddText(title).RT().Margin(0, 0, 6, 10);
+            return this;
         }
 
         private void Awake()
         {
-            transform.SetParent(UGUI.canvas.transform, false);
-            root = gameObject.AddComponent<RectTransform>();
             // bg
-            root.AddImage().SetColor(Color.gray);
-            root.AddImage().SetColor(Color.green).SetType(Image.Type.Sliced, false);
+            root.AddImage().SetColor(Color.gray).RT().Margin();
+            root.AddImage().SetColor(Color.green).SetType(Image.Type.Sliced, false).RT().Margin();
         }
     }
 }

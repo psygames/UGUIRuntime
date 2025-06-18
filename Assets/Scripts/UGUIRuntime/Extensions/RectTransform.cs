@@ -46,7 +46,7 @@ namespace UGUIRuntime
         {
             rectTransform.anchorMin = Vector2.zero;
             rectTransform.anchorMax = Vector2.one;
-            rectTransform.sizeDelta = new Vector2(-left - right,  - down - top);
+            rectTransform.sizeDelta = new Vector2(-left - right, -down - top);
             rectTransform.anchoredPosition = new Vector2(left, -top);
             return rectTransform;
         }
@@ -107,6 +107,16 @@ namespace UGUIRuntime
         }
 
         #region Set Items
+        public static RectTransform RT(this Graphic graphic)
+        {
+            return graphic.rectTransform;
+        }
+
+        public static RectTransform RT(this CustomUI ui)
+        {
+            return ui.root;
+        }
+
         public static RectTransform SetIndex(this RectTransform rectTransform, int index)
         {
             rectTransform.SetSiblingIndex(index);
@@ -161,13 +171,12 @@ namespace UGUIRuntime
             return node;
         }
 
-        public static Image AddImage(this RectTransform rectTransform, string name = null)
+        public static Image AddImage(this RectTransform rectTransform, string sprite = "rect", string name = null)
         {
             var node = rectTransform.AddNode(name ?? "image");
             var image = node.gameObject.AddComponent<Image>();
             image.raycastTarget = false;
-            image.SetSprite("rect");
-            image.rectTransform.SetAnchorMinMax(Vector2.zero, Vector2.one);
+            image.SetSprite(sprite);
             return image;
         }
 
@@ -278,6 +287,13 @@ namespace UGUIRuntime
             dropdown.itemText = itemLabel;
 
             return dropdown;
+        }
+
+        public static Window AddWindow(this RectTransform rectTransform, string name = null)
+        {
+            var node = rectTransform.AddNode(name ?? "window");
+            var window = node.gameObject.AddComponent<Window>();
+            return window;
         }
         #endregion
 

@@ -19,9 +19,9 @@ namespace UGUIRuntime
         private void SetTitle(string title)
         {
             // title
-            root.AddImage().SetColor(Color.green).SetType(Image.Type.Sliced, false).rectTransform.AnchorTop(40)
-                .AddImage().SetColor(Color.black * 0.6f).rectTransform.Margin(2)
-                .AddText(title).rectTransform.Margin(0, 0, 6, 10);
+            root.AddImage().SetColor(Color.green).SetType(Image.Type.Sliced, false).RT().AnchorTop(40)
+                .AddImage().SetColor(Color.black * 0.6f).RT().Margin(2)
+                .AddText(title).RT().Margin(0, 0, 6, 10);
         }
 
         private void Awake()

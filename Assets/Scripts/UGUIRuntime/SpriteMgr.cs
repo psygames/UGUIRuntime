@@ -20,22 +20,45 @@ namespace UGUIRuntime
             return m_sprites.TryGetValue(name, out var sprite) ? sprite : null;
         }
 
-        private static void CreateDefaultRect()
+        private static void CreateRect()
         {
             var texture = new Texture2D(5, 5);
-            for (int i = 0; i < 5; i++)
+            texture.Apply();
+            AddSprite("rect", texture, new Vector4(2, 2, 2, 2));
+        }
+
+        private static void CreateTriangle()
+        {
+            var texture = new Texture2D(9, 9);
+            var colorMap = new int[][] {
+                new int[]{ 0,0,0,0,0,0,0,0,0 },
+                new int[]{ 0,0,0,0,0,0,0,0,0 },
+                new int[]{ 1,1,1,1,1,1,1,1,1 },
+                new int[]{ 0,1,1,1,1,1,1,1,0 },
+                new int[]{ 0,0,1,1,1,1,1,0,0 },
+                new int[]{ 0,0,0,1,1,1,0,0,0 },
+                new int[]{ 0,0,0,0,1,0,0,0,0 },
+                new int[]{ 0,0,0,0,0,0,0,0,0 },
+                new int[]{ 0,0,0,0,0,0,0,0,0 },
+            };
+            for (int i = 0; i < 9; i++)
             {
-                for (int j = 0; j < 5; j++)
+                for (int j = 0; j < 9; j++)
                 {
-                    texture.SetPixel(i, j, Color.clear);
+                    if (colorMap[i][j] == 1)
+                        texture.SetPixel(i, j, Color.white);
+                    else
+                        texture.SetPixel(i, j, Color.clear);
                 }
             }
-            AddSprite("rect", texture, new Vector4(2, 2, 2, 2));
+            texture.Apply();
+            AddSprite("triangle", texture, Vector4.zero);
         }
 
         public static void Init()
         {
-            CreateDefaultRect();
+            CreateRect();
+            CreateTriangle();
         }
     }
 }

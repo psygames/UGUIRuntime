@@ -7,6 +7,7 @@ namespace UGUIRuntime
     public class UGUI : MonoBehaviour
     {
         public const int UI_LAYER = 5;
+        public static RectTransform root { get { return instance.rootCanvas.GetComponent<RectTransform>(); } }
         public static Canvas canvas { get { return instance.rootCanvas; } }
         public static CanvasScaler scaler { get { return instance.rootCanvasScaler; } }
 
