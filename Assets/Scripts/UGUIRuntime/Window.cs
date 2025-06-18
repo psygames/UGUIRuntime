@@ -5,11 +5,12 @@ namespace UGUIRuntime
 {
     public class Window : CustomUI
     {
+        public RectTransform body;
         public Window SetTitle(string title)
         {
             // title
-            root.AddImage().SetColor(Color.green).SetType(Image.Type.Sliced, false).RT().AnchorTop(40)
-                .AddImage().SetColor(Color.black * 0.6f).RT().Margin(2)
+            root.AddImage("title").SetColor(Color.green).SetType(Image.Type.Sliced, false).RT().AnchorTop(40)
+                .AddImage("bg").SetColor(Color.black * 0.6f).RT().Margin(2)
                 .AddText(title).RT().Margin(0, 0, 6, 10);
             return this;
         }
@@ -17,8 +18,9 @@ namespace UGUIRuntime
         private void Awake()
         {
             // bg
-            root.AddImage().SetColor(Color.gray).RT().Margin();
-            root.AddImage().SetColor(Color.green).SetType(Image.Type.Sliced, false).RT().Margin();
+            root.AddImage("bg").SetColor(Color.gray).RT().Margin();
+            root.AddImage("border").SetColor(Color.green).SetType(Image.Type.Sliced, false).RT().Margin();
+            body = root.AddNode("body").Margin(40, 0, 0, 0);
         }
     }
 }

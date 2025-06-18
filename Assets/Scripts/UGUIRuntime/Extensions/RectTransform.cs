@@ -112,6 +112,11 @@ namespace UGUIRuntime
             return graphic.rectTransform;
         }
 
+        public static RectTransform RT(this Selectable ui)
+        {
+            return ui.GetRectTransform();
+        }
+
         public static RectTransform RT(this CustomUI ui)
         {
             return ui.root;
@@ -171,12 +176,12 @@ namespace UGUIRuntime
             return node;
         }
 
-        public static Image AddImage(this RectTransform rectTransform, string sprite = "rect", string name = null)
+        public static Image AddImage(this RectTransform rectTransform, string name = null)
         {
             var node = rectTransform.AddNode(name ?? "image");
             var image = node.gameObject.AddComponent<Image>();
             image.raycastTarget = false;
-            image.SetSprite(sprite);
+            image.SetSprite("rect");
             return image;
         }
 
@@ -184,6 +189,7 @@ namespace UGUIRuntime
         {
             var node = rectTransform.AddNode(name ?? "button");
             var image = node.gameObject.AddComponent<Image>();
+            image.SetSprite("rect");
             var button = node.gameObject.AddComponent<Button>();
             button.image = image;
             return button;
@@ -294,6 +300,20 @@ namespace UGUIRuntime
             var node = rectTransform.AddNode(name ?? "window");
             var window = node.gameObject.AddComponent<Window>();
             return window;
+        }
+
+        public static TreeView AddTreeView(this RectTransform rectTransform, string name = null)
+        {
+            var node = rectTransform.AddNode(name ?? "treeview");
+            var treeView = node.gameObject.AddComponent<TreeView>();
+            return treeView;
+        }
+
+        public static TreeNode AddTreeNode(this RectTransform rectTransform, string name = null)
+        {
+            var node = rectTransform.AddNode(name ?? "treeview");
+            var treeNode = node.gameObject.AddComponent<TreeNode>();
+            return treeNode;
         }
         #endregion
 
