@@ -16,6 +16,12 @@ namespace UGUIRuntime
             return image;
         }
 
+        public static Image SetRaycast(this Image image, bool raycast = true)
+        {
+            image.raycastTarget = raycast;
+            return image;
+        }
+
         public static Image SetPosition(this Image comp, float x, float y)
         {
             comp.GetRectTransform().SetPosition(x, y);

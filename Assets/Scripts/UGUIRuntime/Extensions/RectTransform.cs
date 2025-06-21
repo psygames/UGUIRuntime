@@ -163,6 +163,20 @@ namespace UGUIRuntime
             return rectTransform;
         }
 
+        public static RectTransform AnchorBottom(this RectTransform rectTransform, float height)
+        {
+            rectTransform.SetAnchorMinMax(Vector2.zero, Vector2.right);
+            rectTransform.sizeDelta = new Vector2(0, height);
+            return rectTransform;
+        }
+
+        public static RectTransform AnchorRight(this RectTransform rectTransform, float width)
+        {
+            rectTransform.SetAnchorMinMax(Vector2.right, Vector2.one);
+            rectTransform.sizeDelta = new Vector2(width, 0);
+            return rectTransform;
+        }
+
         #endregion
 
         #region Add Items

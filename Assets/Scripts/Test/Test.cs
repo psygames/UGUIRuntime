@@ -9,7 +9,10 @@ public class Test : MonoBehaviour
         var wind = UGUI.root.AddWindow().SetTitle("TEST");
         wind.RT().SetRect(new Rect(100, 200, 880, 600));
         var tw = wind.body.AddTreeView();
-        tw.RT().Margin();
-        tw.RT().AddTreeNode("sss");
+        tw.RT().Margin(2);
+        for(int i = 0;i < 10; i++)
+        {
+            tw.AddNode("Node " + i);
+        }
     }
 }
