@@ -24,9 +24,9 @@ namespace UGUIRuntime
             comp.content = content;
             content.GetOrAddComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
             var vlg = content.GetOrAddComponent<VerticalLayoutGroup>();
-            vlg.childForceExpandWidth = false;
+            vlg.childForceExpandWidth = true;
             vlg.childForceExpandHeight = false;
-            vlg.childControlWidth = false;
+            vlg.childControlWidth = true;
             vlg.childControlHeight = false;
 
             var hor = node.AddImage("Scrollbar Horizontal").SetColor(Color.blue * 0.5f);

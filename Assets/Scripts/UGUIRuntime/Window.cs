@@ -11,7 +11,7 @@ namespace UGUIRuntime
             // title
             root.AddImage("title").SetColor(Color.green).SetType(Image.Type.Sliced, false).RT().AnchorTop(40)
                 .AddImage("bg").SetColor(Color.black * 0.6f).RT().Margin(2)
-                .AddText(title).RT().Margin(0, 0, 6, 10);
+                .AddText().SetText(title).RT().Margin(0, 0, 6, 10);
             return this;
         }
 

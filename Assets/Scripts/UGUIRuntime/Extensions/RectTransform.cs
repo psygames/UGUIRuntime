@@ -5,7 +5,7 @@ namespace UGUIRuntime
 {
     public static partial class UGUIRuntimeExtensions
     {
-        private static RectTransform SetAnchoredPosition(this RectTransform rectTransform, Vector2 position)
+        public static RectTransform SetAnchoredPosition(this RectTransform rectTransform, Vector2 position)
         {
             rectTransform.anchoredPosition = position;
             return rectTransform;
@@ -17,7 +17,7 @@ namespace UGUIRuntime
             return rectTransform;
         }
 
-        private static RectTransform SetAnchorMinMax(this RectTransform rectTransform, Vector2 min, Vector2 max)
+        public static RectTransform SetAnchorMinMax(this RectTransform rectTransform, Vector2 min, Vector2 max)
         {
             rectTransform.anchorMin = min;
             rectTransform.anchorMax = max;
@@ -27,12 +27,6 @@ namespace UGUIRuntime
         public static RectTransform Margin(this RectTransform rectTransform, float all = 0f)
         {
             rectTransform.Margin(all, all, all, all);
-            return rectTransform;
-        }
-
-        public static RectTransform MarginLeft(this RectTransform rectTransform, float left)
-        {
-            rectTransform.Margin(0, 0, 0, left);
             return rectTransform;
         }
 
@@ -51,19 +45,19 @@ namespace UGUIRuntime
             return rectTransform;
         }
 
-        private static RectTransform SetPivot(this RectTransform rectTransform, Vector2 pivot)
+        public static RectTransform SetPivot(this RectTransform rectTransform, Vector2 pivot)
         {
             rectTransform.pivot = pivot;
             return rectTransform;
         }
 
-        private static RectTransform SetPivotCenter(this RectTransform rectTransform)
+        public static RectTransform SetPivotCenter(this RectTransform rectTransform)
         {
             rectTransform.SetPivot(Vector2.one * 0.5f);
             return rectTransform;
         }
 
-        private static RectTransform SetCenter(this RectTransform rectTransform)
+        public static RectTransform SetCenter(this RectTransform rectTransform)
         {
             rectTransform.SetPivot(Vector2.one * 0.5f)
                 .SetAnchorMinMax(Vector2.one * 0.5f, Vector2.one * 0.5f);
@@ -177,6 +171,13 @@ namespace UGUIRuntime
             return rectTransform;
         }
 
+        public static RectTransform AnchorLeft(this RectTransform rectTransform, float width)
+        {
+            rectTransform.SetAnchorMinMax(Vector2.left, Vector2.one);
+            rectTransform.sizeDelta = new Vector2(width, 0);
+            return rectTransform;
+        }
+
         #endregion
 
         #region Add Items
@@ -209,7 +210,7 @@ namespace UGUIRuntime
             return button;
         }
 
-        public static Text AddText(this RectTransform rectTransform, string text, string name = null)
+        public static Text AddText(this RectTransform rectTransform, string name = null)
         {
             var node = rectTransform.AddNode(name ?? "text");
             var comp = node.gameObject.AddComponent<Text>();
@@ -217,7 +218,6 @@ namespace UGUIRuntime
             comp.raycastTarget = false;
             comp.SetFont();
             comp.SetSize(160, 30);
-            comp.SetText(text);
             return comp;
         }
 
@@ -325,9 +325,22 @@ namespace UGUIRuntime
 
         public static TreeNode AddTreeNode(this RectTransform rectTransform, string name = null)
         {
-            var node = rectTransform.AddNode(name ?? "treeview");
+            var node = rectTransform.AddNode(name ?? "treenode");
             var treeNode = node.gameObject.AddComponent<TreeNode>();
             return treeNode;
+        }
+
+        public static RectTransform VerticalLayout(this RectTransform rectTransform, int paddingLeft = 0)
+        {
+            var layoutGroup = rectTransform.GetOrAddComponent<VerticalLayoutGroup>();
+            layoutGroup.childForceExpandWidth = true;
+            layoutGroup.childForceExpandHeight = false;
+            layoutGroup.childControlWidth = true;
+            layoutGroup.childControlHeight = false;
+            layoutGroup.padding = new RectOffset(paddingLeft, 0, 0, 0);
+            rectTransform.GetOrAddComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+            // rectTransform.GetOrAddComponent<LayoutElement>();
+            return rectTransform;
         }
         #endregion
 
