@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,9 +15,11 @@ namespace UGUIRuntime
         private Text label;
         private RectTransform content;
         private RectTransform sub;
+        private List<TreeNode> children = new List<TreeNode>();
 
         public Action<TreeNode, bool> onFolded;
         public Action<TreeNode, bool> onSelected;
+        public object data;
 
         private void Awake()
         {
@@ -24,11 +27,7 @@ namespace UGUIRuntime
             root.VerticalLayout();
             content = root.AddNode("content").SetSize(root.rect.width, 20);
 
-            select = content.AddButton("select").SetListener(() =>
-            {
-                Select(!isSelected);
-                onSelected?.Invoke(this, isSelected);
-            });
+            select = content.AddButton("select").SetListener(OnSelect);
             select.RT().Margin();
             select.colors = new ColorBlock
             {
@@ -44,37 +43,29 @@ namespace UGUIRuntime
             label.RT().Margin(0, 0, 0, 26);
             label.SetFont(16);
 
-            foldout = content.AddButton("fold").SetListener(() =>
-            {
-                Fold(!isFolded);
-                onFolded?.Invoke(this, isFolded);
-            });
+            foldout = content.AddButton("fold").SetListener(OnFold);
             foldout.RT().SetSize(18, 18).SetPivotCenter().SetAnchorMinMax(Vector2.up * 0.5f, Vector2.up * 0.5f).SetAnchoredPosition(new Vector2(10, 0));
             foldout.image.SetSprite("triangle");
-            foldout.gameObject.SetActive(false);
 
             sub = root.AddNode("sub");
             sub.VerticalLayout(20);
         }
 
-        public void SetLabel(string content)
+        private void OnSelect()
         {
-            label.text = content;
+            isSelected = !isSelected;
+            Debug.Log("OnSelect: " + name + ", isSelected: " + isSelected);
+            onSelected?.Invoke(this, isSelected);
         }
 
-        public TreeNode Select(bool selected)
+        private void OnFold()
         {
-            isSelected = selected;
-            return this;
-        }
-
-        public TreeNode Fold(bool isFolded)
-        {
-            this.isFolded = isFolded;
+            isFolded = !isFolded;
+            Debug.Log("OnFold: " + name + ", isFolded: " + isFolded);
             foldout.RT().localRotation = Quaternion.Euler(0, 0, isFolded ? 0 : -90);
             sub.gameObject.SetActive(!isFolded);
             StartCoroutine(DelayedFix());
-            return this;
+            onFolded?.Invoke(this, isFolded);
         }
 
         private IEnumerator DelayedFix()
@@ -91,12 +82,30 @@ namespace UGUIRuntime
 
         public TreeNode AddNode(string label, string name = null)
         {
-            foldout.gameObject.SetActive(true);
             var node = sub.AddTreeNode(name);
             node.RT().SetSize(root.rect.width, 20);
             node.SetLabel(label);
-            node.Fold(false);
+            children.Add(node);
             return node;
+        }
+
+        public void SetLabel(string content)
+        {
+            label.text = content;
+        }
+
+        public void SetCanFold(bool canFold)
+        {
+            foldout.gameObject.SetActive(canFold);
+        }
+
+        public void ClearChildren()
+        {
+            foreach (var child in children)
+            {
+                Destroy(child.gameObject);
+            }
+            children.Clear();
         }
     }
 }

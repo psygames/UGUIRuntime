@@ -14,6 +14,14 @@ namespace UGUIRuntime
             m_sprites[name] = sprite;
         }
 
+        public static void AddSpriteByBase64(string name, string base64, int width, int height, Vector4 border)
+        {
+            var bytes = System.Convert.FromBase64String(base64);
+            var texture = new Texture2D(width, height);
+            texture.LoadImage(bytes);
+            AddSprite(name, texture, border);
+        }
+
         public static Sprite GetSprite(string name)
         {
             if (string.IsNullOrEmpty(name)) return null;
@@ -29,30 +37,8 @@ namespace UGUIRuntime
 
         private static void CreateTriangle()
         {
-            var texture = new Texture2D(9, 9);
-            var colorMap = new int[][] {
-                new int[]{ 0,0,0,0,0,0,0,0,0 },
-                new int[]{ 0,0,0,0,0,0,0,0,0 },
-                new int[]{ 0,1,1,1,1,1,1,1,0 },
-                new int[]{ 0,1,1,1,1,1,1,1,0 },
-                new int[]{ 0,0,1,1,1,1,1,0,0 },
-                new int[]{ 0,0,1,1,1,1,1,0,0 },
-                new int[]{ 0,0,0,1,1,1,0,0,0 },
-                new int[]{ 0,0,0,0,1,0,0,0,0 },
-                new int[]{ 0,0,0,0,0,0,0,0,0 },
-            };
-            for (int i = 0; i < 9; i++)
-            {
-                for (int j = 0; j < 9; j++)
-                {
-                    if (colorMap[i][j] == 1)
-                        texture.SetPixel(i, j, Color.white);
-                    else
-                        texture.SetPixel(i, j, Color.clear);
-                }
-            }
-            texture.Apply();
-            AddSprite("triangle", texture, Vector4.zero);
+            var b64 = "iVBORw0KGgoAAAANSUhEUgAAAA0AAAANCAYAAABy6+R8AAAAnElEQVQoFWNgGBCwZcuWBZs3b1YlZDkjsgKgpntA/l8gXvnr16/+oKCgt8jyMDY2TWA5RkbGz//+/Zv+/fv3eWFhYb9gGkA0EzIHmf3//39eoMYyTk7OvVu3bvVBlsOpCaYIqFEaaMAkoNOrYWIsMAYe+glQY5e3t/cWmBqcmvD5CZsmcOj9/PkTZ+ihazoEdH+rr6/vbZhTBpYGAOeIQzDR8qr4AAAAAElFTkSuQmCC";
+            AddSpriteByBase64("triangle", b64, 13, 13, Vector4.zero);
         }
 
         public static void Init()

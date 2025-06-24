@@ -10,18 +10,29 @@ public class Test : MonoBehaviour
         wind.RT().SetRect(new Rect(100, 200, 880, 600));
         var tw = wind.body.AddTreeView();
         tw.RT().Margin(2);
-        var node = tw.AddNode("Canvas");
-
-        RecursiveTreeNode(node, GameObject.Find("Canvas").transform);
+        var rootObj = GameObject.Find("Canvas");
+        var node = tw.AddNode(rootObj.name);
+        node.data = rootObj.transform;
+        node.onFolded += FoldNode;
     }
 
-    private static void RecursiveTreeNode(TreeNode node, Transform t)
+    private void FoldNode(TreeNode node, bool isFold)
     {
-        for (int i = 0; i < t.childCount; i++)
+        if (isFold)
         {
-            var t1 = t.GetChild(i);
-            var child = node.AddNode(t1.name, t1.name);
-            RecursiveTreeNode(child, t1);
+            node.ClearChildren();
+        }
+        else
+        {
+            var refTrans = node.data as Transform;
+            for (int i = 0; i < refTrans.childCount; i++)
+            {
+                var t = refTrans.GetChild(i);
+                var child = node.AddNode(t.name, t.name);
+                child.SetCanFold(t.childCount > 0);
+                child.data = t;
+                child.onFolded += FoldNode;
+            }
         }
     }
 }
