@@ -150,9 +150,10 @@ namespace UGUIRuntime
             return rectTransform;
         }
 
-        public static RectTransform AnchorTop(this RectTransform rectTransform, float height)
+        public static RectTransform AnchorTop(this RectTransform rectTransform, float height, float offset = 0)
         {
             rectTransform.SetAnchorMinMax(Vector2.up, Vector2.one);
+            rectTransform.SetAnchoredPosition(new Vector2(0, -offset));
             rectTransform.sizeDelta = new Vector2(0, height);
             return rectTransform;
         }
@@ -225,8 +226,14 @@ namespace UGUIRuntime
         public static Toggle AddToggle(this RectTransform rectTransform, string name = null)
         {
             var node = rectTransform.AddNode(name ?? "toggle");
-            node.AddNode("Background").Margin().AddNode("Checkmark").SetCenter();
+            var bg = node.AddImage("Background");
+            bg.SetType(Image.Type.Sliced, false).SetRaycast().RT().Margin();
+            var checkmark = bg.RT().AddImage("Checkmark");
+            checkmark.SetSprite("checkmark").SetRaycast().RT().Margin(5);
+            node.SetSize(30, 30);
             var toggle = node.gameObject.AddComponent<Toggle>();
+            toggle.targetGraphic = bg;
+            toggle.graphic = checkmark;
             return toggle;
         }
 

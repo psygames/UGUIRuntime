@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace UGUIRuntime
 {
@@ -42,16 +41,18 @@ namespace UGUIRuntime
             AddSprite("rect", texture, new Vector4(2, 2, 2, 2));
         }
 
-        private static void CreateTriangle()
+        private static void CreateNormal()
         {
-            var b64 = "iVBORw0KGgoAAAANSUhEUgAAAA0AAAANCAYAAABy6+R8AAAAnElEQVQoFWNgGBCwZcuWBZs3b1YlZDkjsgKgpntA/l8gXvnr16/+oKCgt8jyMDY2TWA5RkbGz//+/Zv+/fv3eWFhYb9gGkA0EzIHmf3//39eoMYyTk7OvVu3bvVBlsOpCaYIqFEaaMAkoNOrYWIsMAYe+glQY5e3t/cWmBqcmvD5CZsmcOj9/PkTZ+ihazoEdH+rr6/vbZhTBpYGAOeIQzDR8qr4AAAAAElFTkSuQmCC";
-            AddSpriteByBase64("triangle", b64, 13, 13, Vector4.zero);
+            var triangle = "iVBORw0KGgoAAAANSUhEUgAAAA0AAAANCAYAAABy6+R8AAAAnElEQVQoFWNgGBCwZcuWBZs3b1YlZDkjsgKgpntA/l8gXvnr16/+oKCgt8jyMDY2TWA5RkbGz//+/Zv+/fv3eWFhYb9gGkA0EzIHmf3//39eoMYyTk7OvVu3bvVBlsOpCaYIqFEaaMAkoNOrYWIsMAYe+glQY5e3t/cWmBqcmvD5CZsmcOj9/PkTZ+ihazoEdH+rr6/vbZhTBpYGAOeIQzDR8qr4AAAAAElFTkSuQmCC";
+            AddSpriteByBase64("triangle", triangle, 13, 13, Vector4.zero);
+            var checkmark = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA8ElEQVQ4EZWOIQsCQRSEDzEcBjGY/QFiFIPpgsFg8CeYDOYLIhaziOGiUUz+DLPRIAYxGExGg8j5re7Cu/U8bh8Mb2fezNx5nuPEceyDCPQco187wQUws3QqIRWAl0mzj7kLMJfBGZhRRYFLwcok9Y5cwl0rfIKXchVgrICrKFC/3k6EEeqgkxA1QV8DOfOEj0sL3IFqHsojvA/kHCC+9HgIF+FQJSNlYFfBTdyevJuJsDaGwqSenxL21tJnP2EjYJxYZpvuEYrGn7oxTO2U5g92IzVki39KQtuXySkZ6y+rtQOFzEDakdAAbEAt7S61N1wRinJXJnllAAAAAElFTkSuQmCC";
+            AddSpriteByBase64("checkmark", checkmark, 13, 13, Vector4.zero);
         }
 
         public static void Init()
         {
             CreateRect();
-            CreateTriangle();
+            CreateNormal();
         }
     }
 }

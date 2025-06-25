@@ -23,12 +23,6 @@ namespace UGUIRuntime
             return mark;
         }
 
-        public static T SetT<T>(this T t) where T : UnityEngine.EventSystems.UIBehaviour
-        {
-            t.GetRectTransform().Margin(0);
-            return t;
-        }
-
         public static Toggle SetText(this Toggle toggle, string text, float width = 0f)
         {
             var comp = toggle.GetRectTransform().GetOrAddNode("Label").GetOrAddComponent<Text>();
