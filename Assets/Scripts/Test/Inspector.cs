@@ -1,12 +1,12 @@
 ﻿using UGUIRuntime;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Inspector : MonoBehaviour
 {
     private Window wind;
     private RectTransform root;
     private GameObject target;
-    private int offset = 0;
 
     private void Awake()
     {
@@ -17,20 +17,17 @@ public class Inspector : MonoBehaviour
     {
         wind = UGUI.root.AddWindow().SetTitle("Inspector");
         wind.RT().SetRect(new Rect(1000, 200, 880, 600));
-        root = wind.body.AddNode("root").Margin();
+        var sv = wind.body.AddScrollView();
+        sv.horizontal = false;
+        sv.content.GetComponent<VerticalLayoutGroup>().childControlHeight = true;
+        sv.RT().Margin();
+        root = sv.content;
     }
 
     public void SetObject(GameObject go)
     {
         target = go;
-        offset = 0;
-
-        if (root)
-        {
-            GameObject.Destroy(root.gameObject);
-            root = wind.body.AddNode("root").Margin(20, 10);
-        }
-
+        ClearRoot();
         AddTiltle();
         AddLine();
 
@@ -43,19 +40,18 @@ public class Inspector : MonoBehaviour
 
     private void AddTiltle()
     {
-        root.AddToggle("active").SetValue(target.activeSelf).SetListener((isOn) =>
+        var vle = root.VLE(40);
+        vle.AddToggle("active").SetValue(target.activeSelf).SetListener((isOn) =>
         {
             target?.SetActive(isOn);
         });
 
-        root.AddText("name").SetText(target.name).RT().Margin(0, 0, 0, 50);
-        offset += 40;
+        vle.AddText("name").SetText(target.name).RT().Margin(0, 0, 0, 50);
     }
 
     private void AddLine()
     {
-        root.AddImage("line").RT().AnchorTop(2, offset);
-        offset += 10;
+        root.VLE(10).AddImage("line").RT();
     }
 
     private void AddComp(Component comp)
@@ -66,9 +62,20 @@ public class Inspector : MonoBehaviour
             root.AddToggle().SetValue(mono.enabled).SetListener((isOn) =>
             {
                 mono.enabled = isOn;
-            }).SetPosition(0, offset);
+            });
         }
-        root.AddText().SetText(comp.GetType().Name).RT().Margin(offset, 0, 0, 50);
-        offset += 40;
+        root.AddText().SetText(comp.GetType().Name);
+    }
+
+    private void ClearRoot()
+    {
+        for (int i = root.childCount - 1; i >= 0; i--)
+        {
+            var child = root.GetChild(i);
+            if (child)
+            {
+                GameObject.Destroy(child.gameObject);
+            }
+        }
     }
 }

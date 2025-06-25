@@ -192,6 +192,14 @@ namespace UGUIRuntime
             return node;
         }
 
+        public static RectTransform VLE(this RectTransform rectTransform, float height, string name = null)
+        {
+            var node = rectTransform.AddNode(name ?? "vle");
+            var vle = node.GetOrAddComponent<LayoutElement>();
+            vle.minHeight = height;
+            return node;
+        }
+
         public static Image AddImage(this RectTransform rectTransform, string name = null)
         {
             var node = rectTransform.AddNode(name ?? "image");
