@@ -6,14 +6,15 @@ namespace UGUIRuntime
 {
     public static partial class UGUIRuntimeExtensions
     {
-        private static Dictionary<int, Font> fonts = new Dictionary<int, Font>();
+        private static Dictionary<string, Font> fonts = new Dictionary<string, Font>();
 
         public static Text SetFont(this Text text, int size = 24, string fontname = "Arial")
         {
-            if (!fonts.TryGetValue(size, out var font))
+            var key = $"{fontname}_{size}";
+            if (!fonts.TryGetValue(key, out var font))
             {
                 font = Font.CreateDynamicFontFromOSFont(fontname, size);
-                fonts.Add(size, font);
+                fonts.Add(key, font);
             }
             text.font = font;
             text.fontSize = size;

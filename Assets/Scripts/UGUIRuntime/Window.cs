@@ -18,7 +18,7 @@ namespace UGUIRuntime
         private void Awake()
         {
             // bg
-            root.AddImage("bg").SetColor(Color.gray).RT().Margin();
+            root.AddImage("bg").SetColor(Color.black).RT().Margin();
             root.AddImage("border").SetColor(Color.green).SetType(Image.Type.Sliced, false).RT().Margin();
             body = root.AddNode("body").Margin(40, 0, 0, 0);
         }

@@ -31,6 +31,13 @@ namespace UGUIRuntime
         private static void CreateRect()
         {
             var texture = new Texture2D(5, 5);
+            for (int i = 0; i < 5; i++)
+            {
+                for (int j = 0; j < 5; j++)
+                {
+                    texture.SetPixel(i, j, Color.white);
+                }
+            }
             texture.Apply();
             AddSprite("rect", texture, new Vector4(2, 2, 2, 2));
         }

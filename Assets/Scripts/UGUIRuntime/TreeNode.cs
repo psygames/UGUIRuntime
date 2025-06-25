@@ -16,10 +16,12 @@ namespace UGUIRuntime
         private RectTransform content;
         private RectTransform sub;
         private List<TreeNode> children = new List<TreeNode>();
+        private int level = 0;
 
         public Action<TreeNode, bool> onFolded;
-        public Action<TreeNode, bool> onSelected;
+        public Action<TreeNode> onSelected;
         public object data;
+        public static TreeNode currentSelected;
 
         private void Awake()
         {
@@ -29,33 +31,25 @@ namespace UGUIRuntime
 
             select = content.AddButton("select").SetListener(OnSelect);
             select.RT().Margin();
-            select.colors = new ColorBlock
-            {
-                normalColor = Color.clear,
-                highlightedColor = Color.white * 0.5f,
-                pressedColor = Color.blue * 0.5f,
-                selectedColor = Color.blue * 0.5f,
-                disabledColor = Color.clear,
-                colorMultiplier = 1
-            };
+            select.image.color = Color.clear;
 
             label = select.RT().AddText();
-            label.RT().Margin(0, 0, 0, 26);
-            label.SetFont(16);
-
+            label.SetFont(18);
+            label.RT().Margin(0, 0, 0, 24 + level * 20);
             foldout = content.AddButton("fold").SetListener(OnFold);
-            foldout.RT().SetSize(18, 18).SetPivotCenter().SetAnchorMinMax(Vector2.up * 0.5f, Vector2.up * 0.5f).SetAnchoredPosition(new Vector2(10, 0));
+            foldout.RT().SetSize(20, 20).SetPivotCenter().SetAnchorMinMax(Vector2.up * 0.5f, Vector2.up * 0.5f);
+            foldout.RT().SetAnchoredPosition(new Vector2(10 + level * 20, 0));
             foldout.image.SetSprite("triangle");
 
             sub = root.AddNode("sub");
-            sub.VerticalLayout(20);
+            sub.VerticalLayout();
         }
 
         private void OnSelect()
         {
-            isSelected = !isSelected;
-            Debug.Log("OnSelect: " + name + ", isSelected: " + isSelected);
-            onSelected?.Invoke(this, isSelected);
+            SetSelected(true);
+            Debug.Log("OnSelect: " + name);
+            onSelected?.Invoke(this);
         }
 
         private void OnFold()
@@ -71,13 +65,12 @@ namespace UGUIRuntime
         private IEnumerator DelayedFix()
         {
             var vlg = GetComponentInParent<ScrollRect>().content.GetComponent<VerticalLayoutGroup>();
-            vlg.enabled = false;
-            yield return null;
-            vlg.enabled = true;
-            yield return null;
-            vlg.enabled = false;
-            yield return null;
-            vlg.enabled = true;
+            for (int i = 0; i < 5; i++)
+            {
+                vlg.enabled = false;
+                yield return null;
+                vlg.enabled = true;
+            }
         }
 
         public TreeNode AddNode(string label, string name = null)
@@ -85,6 +78,9 @@ namespace UGUIRuntime
             var node = sub.AddTreeNode(name);
             node.RT().SetSize(root.rect.width, 20);
             node.SetLabel(label);
+            node.level = level + 1;
+            node.label.RT().Margin(0, 0, 0, 24 + node.level * 20);
+            node.foldout.RT().SetAnchoredPosition(new Vector2(10 + node.level * 20, 0));
             children.Add(node);
             return node;
         }
@@ -97,6 +93,27 @@ namespace UGUIRuntime
         public void SetCanFold(bool canFold)
         {
             foldout.gameObject.SetActive(canFold);
+        }
+
+        public void SetSelected(bool selected)
+        {
+            isSelected = selected;
+            select.image.color = isSelected ? Color.green * 0.5f : Color.clear;
+            if (isSelected)
+            {
+                if (currentSelected != null && currentSelected != this)
+                {
+                    currentSelected.SetSelected(false);
+                }
+                currentSelected = this;
+            }
+            else
+            {
+                if (currentSelected == this)
+                {
+                    currentSelected = null;
+                }
+            }
         }
 
         public void ClearChildren()

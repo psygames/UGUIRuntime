@@ -17,8 +17,6 @@ namespace UGUIRuntime
         private const int rootWidth = 800;
         private const int rootHeight = 2400;
 
-        private const int fontSize = 24;
-        private static string fontname = "Microsoft YaHei";
         private static float indent => 10 + indentLevel * 20;
 
         public static RectTransform CreateRoot()
@@ -40,8 +38,7 @@ namespace UGUIRuntime
         {
             return root.AddText(text)
                 .SetPosition(indent, -4)
-                .SetSize(titleWidth - indent, height)
-                .SetFont(fontSize, fontname);
+                .SetSize(titleWidth - indent, height);
         }
 
         public static RectTransform CreateItem()
@@ -114,11 +111,11 @@ namespace UGUIRuntime
                 .SetValue(index);
 
             dropdown.GetBackground().SetSprite("rect").SetColor(Color.clear);
-            dropdown.GetLabel().SetPosition(0, -4).SetAlignment(TextAnchor.MiddleCenter).SetFont(fontSize, fontname).SetColor(Color.white);
+            dropdown.GetLabel().SetPosition(0, -4).SetAlignment(TextAnchor.MiddleCenter).SetColor(Color.white);
             dropdown.GetDropdownBackground().SetSprite("rect").SetColor(Color.clear);
             dropdown.GetItemBackground().SetSprite("rect").SetColor(new Color32(85, 85, 85, 240));
             dropdown.GetItemCheckmark().SetSprite("rect").SetColor(Color.black * 0.2f);
-            dropdown.GetItemLabel().SetPosition(0, -4).SetAlignment(TextAnchor.MiddleCenter).SetFont(fontSize, fontname).SetColor(Color.white);
+            dropdown.GetItemLabel().SetPosition(0, -4).SetAlignment(TextAnchor.MiddleCenter).SetColor(Color.white);
             return dropdown;
         }
     }

@@ -217,6 +217,7 @@ namespace UGUIRuntime
             comp.alignment = TextAnchor.MiddleLeft;
             comp.raycastTarget = false;
             comp.SetFont();
+            comp.SetAlignment(TextAnchor.UpperLeft);
             comp.SetSize(160, 30);
             return comp;
         }
@@ -330,14 +331,13 @@ namespace UGUIRuntime
             return treeNode;
         }
 
-        public static RectTransform VerticalLayout(this RectTransform rectTransform, int paddingLeft = 0)
+        public static RectTransform VerticalLayout(this RectTransform rectTransform)
         {
             var layoutGroup = rectTransform.GetOrAddComponent<VerticalLayoutGroup>();
             layoutGroup.childForceExpandWidth = true;
             layoutGroup.childForceExpandHeight = false;
             layoutGroup.childControlWidth = true;
             layoutGroup.childControlHeight = false;
-            layoutGroup.padding = new RectOffset(paddingLeft, 0, 0, 0);
             rectTransform.GetOrAddComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
             // rectTransform.GetOrAddComponent<LayoutElement>();
             return rectTransform;

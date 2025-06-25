@@ -1,22 +1,34 @@
 ﻿using UGUIRuntime;
 using UnityEngine;
+using static UnityEngine.UIElements.VisualElement;
 
 public class Test : MonoBehaviour
 {
     private void Awake()
     {
         UGUI.Create();
-        var wind = UGUI.root.AddWindow().SetTitle("TEST");
+        CreateHierarchy();
+    }
+
+    private void CreateInspector()
+    {
+        var wind = UGUI.root.AddWindow().SetTitle("Inspector");
+    }
+
+    private void CreateHierarchy()
+    {
+        var wind = UGUI.root.AddWindow().SetTitle("Hierarchy");
         wind.RT().SetRect(new Rect(100, 200, 880, 600));
         var tw = wind.body.AddTreeView();
         tw.RT().Margin(2);
         var rootObj = GameObject.Find("Canvas");
         var node = tw.AddNode(rootObj.name);
         node.data = rootObj.transform;
-        node.onFolded += FoldNode;
+        node.onFolded += OnFolded;
+        node.onSelected += OnSelected;
     }
 
-    private void FoldNode(TreeNode node, bool isFold)
+    private void OnFolded(TreeNode node, bool isFold)
     {
         if (isFold)
         {
@@ -31,8 +43,13 @@ public class Test : MonoBehaviour
                 var child = node.AddNode(t.name, t.name);
                 child.SetCanFold(t.childCount > 0);
                 child.data = t;
-                child.onFolded += FoldNode;
+                child.onFolded += OnFolded;
             }
         }
+    }
+
+    private void OnSelected(TreeNode node)
+    {
+
     }
 }
