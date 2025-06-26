@@ -7,13 +7,16 @@ namespace UGUIRuntime
     public class UGUI : MonoBehaviour
     {
         public const int UI_LAYER = 5;
+        public const string NAME = "[UGUI Runtime]";
         public static RectTransform root { get { return instance.rootCanvas.GetComponent<RectTransform>(); } }
         public static Canvas canvas { get { return instance.rootCanvas; } }
+        public static CanvasGroup canvasGroup { get { return instance.rootCanvasGroup; } }
         public static CanvasScaler scaler { get { return instance.rootCanvasScaler; } }
 
         private static UGUI instance;
         private Canvas rootCanvas;
         private CanvasScaler rootCanvasScaler;
+        private CanvasGroup rootCanvasGroup;
 
         public static UGUI Create()
         {
@@ -21,7 +24,7 @@ namespace UGUIRuntime
 
             SpriteMgr.Init();
 
-            var obj = new GameObject("[UGUI Runtime]");
+            var obj = new GameObject(NAME);
             GameObject.DontDestroyOnLoad(obj);
             instance = obj.AddComponent<UGUI>();
 
@@ -43,11 +46,16 @@ namespace UGUIRuntime
             canvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
             instance.rootCanvasScaler = canvasScaler;
 
+            // canvas group
+            var canvasGroup = canvasObj.AddComponent<CanvasGroup>();
+            canvasGroup.alpha = 0.5f;
+            instance.rootCanvasGroup = canvasGroup;
+
             // graphic raycaster
             var graphicRaycaster = canvasObj.AddComponent<GraphicRaycaster>();
             graphicRaycaster.ignoreReversedGraphics = true;
 
-            // evemt system
+            // event system
             var eventSystemObj = new GameObject("EventSystem");
             var eventSystem = eventSystemObj.AddComponent<EventSystem>();
             eventSystem.sendNavigationEvents = true;
