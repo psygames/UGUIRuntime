@@ -22,18 +22,6 @@ namespace UGUIRuntime
             return image;
         }
 
-        public static Image SetPosition(this Image comp, float x, float y)
-        {
-            comp.GetRectTransform().SetPosition(x, y);
-            return comp;
-        }
-
-        public static Image SetSize(this Image comp, float w, float h)
-        {
-            comp.GetRectTransform().SetSize(w, h);
-            return comp;
-        }
-
         public static Image SetType(this Image comp, Image.Type type, bool fillCenter = true)
         {
             comp.type = type;

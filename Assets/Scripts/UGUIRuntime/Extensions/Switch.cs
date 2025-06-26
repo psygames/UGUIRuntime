@@ -86,17 +86,5 @@ namespace UGUIRuntime
             _switch.toggle.isOn = isOn;
             return _switch;
         }
-
-        public static Switch SetPosition(this Switch comp, float x, float y)
-        {
-            comp.GetRectTransform().SetPosition(x, y);
-            return comp;
-        }
-
-        public static Switch SetSize(this Switch comp, float w, float h)
-        {
-            comp.GetRectTransform().SetSize(w, h);
-            return comp;
-        }
     }
 }

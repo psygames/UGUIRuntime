@@ -26,7 +26,7 @@ namespace UGUIRuntime
         private void Awake()
         {
             root.AnchorTop(20);
-            root.VerticalLayout();
+            root.SetVerticalLayoutGroup();
             content = root.AddNode("content").SetSize(root.rect.width, 20);
 
             select = content.AddButton("select").SetListener(OnSelect);
@@ -41,8 +41,7 @@ namespace UGUIRuntime
             foldout.RT().SetAnchoredPosition(new Vector2(10 + level * 20, 0));
             foldout.image.SetSprite("triangle");
 
-            sub = root.AddNode("sub");
-            sub.VerticalLayout();
+            sub = root.VLG("sub");
         }
 
         private void OnSelect()

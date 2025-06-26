@@ -53,17 +53,5 @@ namespace UGUIRuntime
             slider.onValueChanged.AddListener(action);
             return slider;
         }
-
-        public static Slider SetPosition(this Slider comp, float x, float y)
-        {
-            comp.GetRectTransform().SetPosition(x, y);
-            return comp;
-        }
-
-        public static Slider SetSize(this Slider comp, float w, float h)
-        {
-            comp.GetRectTransform().SetSize(w, h);
-            return comp;
-        }
     }
 }

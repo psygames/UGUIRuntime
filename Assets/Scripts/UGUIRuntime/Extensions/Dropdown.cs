@@ -112,18 +112,6 @@ namespace UGUIRuntime
             return dropdown;
         }
 
-        public static Dropdown SetPosition(this Dropdown comp, float x, float y)
-        {
-            comp.GetRectTransform().SetPosition(x, y);
-            return comp;
-        }
-
-        public static Dropdown SetSize(this Dropdown comp, float w, float h)
-        {
-            comp.GetRectTransform().SetSize(w, h);
-            return comp;
-        }
-
         public static Dropdown SetDropdownHeight(this Dropdown comp, float height)
         {
             comp.GetDropdownArea().SetSizeDelta(new Vector2(0, height));

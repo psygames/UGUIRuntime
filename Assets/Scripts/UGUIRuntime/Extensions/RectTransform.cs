@@ -150,11 +150,11 @@ namespace UGUIRuntime
             return rectTransform;
         }
 
-        public static RectTransform AnchorTop(this RectTransform rectTransform, float height, float offset = 0)
+        public static RectTransform AnchorTop(this RectTransform rectTransform, float height, float offsetTop = 0, float offsetLeft = 0, float offsetRight = 0)
         {
             rectTransform.SetAnchorMinMax(Vector2.up, Vector2.one);
-            rectTransform.SetAnchoredPosition(new Vector2(0, -offset));
-            rectTransform.sizeDelta = new Vector2(0, height);
+            rectTransform.SetAnchoredPosition(new Vector2(offsetLeft, offsetTop));
+            rectTransform.sizeDelta = new Vector2(-offsetLeft - offsetRight, height);
             return rectTransform;
         }
 
@@ -182,9 +182,9 @@ namespace UGUIRuntime
         #endregion
 
         #region Add Items
-        public static RectTransform AddNode(this RectTransform rectTransform, string name = null)
+        public static RectTransform AddNode(this RectTransform rectTransform, string name = "node")
         {
-            var go = new GameObject(name ?? "node");
+            var go = new GameObject(name);
             go.layer = UGUI.UI_LAYER;
             var node = go.AddComponent<RectTransform>();
             node.SetParent(rectTransform);
@@ -192,26 +192,26 @@ namespace UGUIRuntime
             return node;
         }
 
-        public static RectTransform VLE(this RectTransform rectTransform, float height, string name = null)
+        public static RectTransform VLE(this RectTransform rectTransform, float height, string name = "vle")
         {
-            var node = rectTransform.AddNode(name ?? "vle");
+            var node = rectTransform.AddNode(name);
             var vle = node.GetOrAddComponent<LayoutElement>();
             vle.minHeight = height;
             return node;
         }
 
-        public static Image AddImage(this RectTransform rectTransform, string name = null)
+        public static Image AddImage(this RectTransform rectTransform, string name = "image")
         {
-            var node = rectTransform.AddNode(name ?? "image");
+            var node = rectTransform.AddNode(name);
             var image = node.gameObject.AddComponent<Image>();
             image.raycastTarget = false;
             image.SetSprite("rect");
             return image;
         }
 
-        public static Button AddButton(this RectTransform rectTransform, string name = null)
+        public static Button AddButton(this RectTransform rectTransform, string name = "button")
         {
-            var node = rectTransform.AddNode(name ?? "button");
+            var node = rectTransform.AddNode(name);
             var image = node.gameObject.AddComponent<Image>();
             image.SetSprite("rect");
             var button = node.gameObject.AddComponent<Button>();
@@ -219,9 +219,9 @@ namespace UGUIRuntime
             return button;
         }
 
-        public static Text AddText(this RectTransform rectTransform, string name = null)
+        public static Text AddText(this RectTransform rectTransform, string name = "text")
         {
-            var node = rectTransform.AddNode(name ?? "text");
+            var node = rectTransform.AddNode(name);
             var comp = node.gameObject.AddComponent<Text>();
             comp.alignment = TextAnchor.MiddleLeft;
             comp.raycastTarget = false;
@@ -231,9 +231,9 @@ namespace UGUIRuntime
             return comp;
         }
 
-        public static Toggle AddToggle(this RectTransform rectTransform, string name = null)
+        public static Toggle AddToggle(this RectTransform rectTransform, string name = "toggle")
         {
-            var node = rectTransform.AddNode(name ?? "toggle");
+            var node = rectTransform.AddNode(name);
             var bg = node.AddImage("Background");
             bg.SetType(Image.Type.Sliced, false).SetRaycast().RT().Margin();
             var checkmark = bg.RT().AddImage("Checkmark");
@@ -245,18 +245,18 @@ namespace UGUIRuntime
             return toggle;
         }
 
-        public static Switch AddSwitch(this RectTransform rectTransform, string name = null)
+        public static Switch AddSwitch(this RectTransform rectTransform, string name = "switch")
         {
-            var toggle = rectTransform.AddToggle(name ?? "switch");
+            var toggle = rectTransform.AddToggle(name);
             toggle.GetRectTransform().GetOrAddNode("Background").AddNode("Knob").SetCenter();
             var _switch = toggle.gameObject.AddComponent<Switch>();
             _switch.toggle = toggle;
             return _switch;
         }
 
-        public static Slider AddSlider(this RectTransform rectTransform, string name = null)
+        public static Slider AddSlider(this RectTransform rectTransform, string name = "slider")
         {
-            var node = rectTransform.AddNode(name ?? "slider");
+            var node = rectTransform.AddNode(name);
             node.AddNode("Background").Margin().SetPivotCenter();
             node.AddNode("Fill Area").Margin().SetPivotCenter().AddNode("Fill")
                 .SetAnchorMinMax(Vector2.zero, Vector2.one);
@@ -267,9 +267,9 @@ namespace UGUIRuntime
             return slider;
         }
 
-        public static Dropdown AddDropdown(this RectTransform rectTransform, string name = null)
+        public static Dropdown AddDropdown(this RectTransform rectTransform, string name = "dropdown")
         {
-            var node = rectTransform.AddNode(name ?? "dropdown");
+            var node = rectTransform.AddNode(name);
             var dropdown = node.GetOrAddComponent<Dropdown>();
             dropdown.image = node.GetOrAddComponent<Image>();
 
@@ -325,28 +325,28 @@ namespace UGUIRuntime
             return dropdown;
         }
 
-        public static Window AddWindow(this RectTransform rectTransform, string name = null)
+        public static Window AddWindow(this RectTransform rectTransform, string name = "window")
         {
-            var node = rectTransform.AddNode(name ?? "window");
+            var node = rectTransform.AddNode(name);
             var window = node.gameObject.AddComponent<Window>();
             return window;
         }
 
-        public static TreeView AddTreeView(this RectTransform rectTransform, string name = null)
+        public static TreeView AddTreeView(this RectTransform rectTransform, string name = "treeview")
         {
-            var node = rectTransform.AddNode(name ?? "treeview");
+            var node = rectTransform.AddNode(name);
             var treeView = node.gameObject.AddComponent<TreeView>();
             return treeView;
         }
 
-        public static TreeNode AddTreeNode(this RectTransform rectTransform, string name = null)
+        public static TreeNode AddTreeNode(this RectTransform rectTransform, string name = "treenode")
         {
-            var node = rectTransform.AddNode(name ?? "treenode");
+            var node = rectTransform.AddNode(name);
             var treeNode = node.gameObject.AddComponent<TreeNode>();
             return treeNode;
         }
 
-        public static RectTransform VerticalLayout(this RectTransform rectTransform)
+        public static RectTransform SetVerticalLayoutGroup(this RectTransform rectTransform)
         {
             var layoutGroup = rectTransform.GetOrAddComponent<VerticalLayoutGroup>();
             layoutGroup.childForceExpandWidth = true;
@@ -354,9 +354,27 @@ namespace UGUIRuntime
             layoutGroup.childControlWidth = true;
             layoutGroup.childControlHeight = false;
             rectTransform.GetOrAddComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
-            // rectTransform.GetOrAddComponent<LayoutElement>();
             return rectTransform;
         }
+
+        public static RectTransform VLG(this RectTransform rectTransform, string name = "vlg")
+        {
+            return rectTransform.AddNode(name).SetVerticalLayoutGroup();
+        }
+
+        public static RectTransform DestroyChildren(this RectTransform rectTransform)
+        {
+            for (int i = rectTransform.childCount - 1; i >= 0; i--)
+            {
+                var child = rectTransform.GetChild(i);
+                if (child)
+                {
+                    GameObject.Destroy(child.gameObject);
+                }
+            }
+            return rectTransform;
+        }
+
         #endregion
 
     }

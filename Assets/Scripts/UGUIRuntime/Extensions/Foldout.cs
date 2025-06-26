@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace UGUIRuntime
@@ -6,46 +7,41 @@ namespace UGUIRuntime
     public class Foldout : MonoBehaviour
     {
         public Toggle toggle;
-        public Vector2 knobOffPosition;
-        public Vector2 knobOnPosition;
-
-        private void LerpTo(Vector2 pos)
-        {
-
-        }
-
-        private void Update()
-        {
-            if (toggle.isOn)
-            {
-                LerpTo(knobOnPosition);
-            }
-            else
-            {
-                LerpTo(knobOffPosition);
-            }
-        }
     }
 
     public static partial class UGUIRuntimeExtensions
     {
-        public static Foldout SetListener(this Foldout foldout, UnityEngine.Events.UnityAction<bool> action)
+        public static RectTransform RT(this Foldout comp)
         {
-            foldout.toggle.onValueChanged.RemoveAllListeners();
-            foldout.toggle.onValueChanged.AddListener(action);
+            return comp.GetRectTransform();
+        }
+
+        public static Foldout SetListener(this Foldout foldout, UnityAction<bool> action)
+        {
+            foldout.toggle.onValueChanged.AddListener((isOn) => { action(!isOn); });
             return foldout;
         }
 
-        public static Foldout SetPosition(this Foldout comp, float x, float y)
+        public static Foldout AddFoldout(this RectTransform rectTransform, string name = "foldout")
         {
-            comp.GetRectTransform().SetPosition(x, y);
-            return comp;
+            var toggle = rectTransform.AddToggle();
+            toggle.GetCheckmark().SetColor(Color.clear);
+            toggle.GetBackground().SetSprite("triangle");
+            var foldout = toggle.RT().GetOrAddComponent<Foldout>();
+            foldout.toggle = toggle;
+            foldout.toggle.GetBackground().RT().SetPivotCenter();
+            foldout.SetListener((isFolded) =>
+            {
+                foldout.SetValue(isFolded);
+            });
+            foldout.SetValue(true);
+            return foldout;
         }
 
-        public static Foldout SetSize(this Foldout comp, float w, float h)
+        public static Foldout SetValue(this Foldout foldout, bool isFolded)
         {
-            comp.GetRectTransform().SetSize(w, h);
-            return comp;
+            foldout.toggle.GetBackground().RT().localRotation = Quaternion.Euler(0, 0, isFolded ? 0 : -90);
+            return foldout;
         }
     }
 }
